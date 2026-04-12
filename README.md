@@ -2,11 +2,14 @@
 
 [TÜİK](https://www.tuik.gov.tr/) (Türkiye İstatistik Kurumu) SDMX REST API'sine erişim sağlayan bir [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) sunucusu.
 
-346 production dataflow üzerinden Türkiye'nin resmi istatistiklerine — nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi ve daha fazlasına — doğrudan LLM üzerinden erişim sağlar. Kimlik doğrulama gerektirmez.
+346 dataflow üzerinden (şimdilik) Türkiye'nin resmi istatistiklerine — nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.
+doğrudan LLM üzerinden erişim sağlar.
+
+*SDMX servisi henüz beta aşamasında olup veriler güncel olmayabilir, zamanla sunucu vb. değişebilir.*
 
 ## Özellikler
 
-- **Guided workflow**: Sunucu, LLM'i adım adım yönlendirir — önce arama, sonra kırılım seçimi, sonra filtreli veri çekme. Token kullanımını minimize eder.
+- **Guided workflow**: Sunucu, LLM'i adım adım akışı yönlendirir: önce arama, sonra kırılım seçimi, sonra filtreli veri çekme. Token kullanımını minimize eder.
 - **Akıllı metadata**: `detail=nodata` ile veri çekmeden boyut yapısını getirir. Tek değerli boyutlar otomatik gizlenir, sadece seçim gerektiren kırılımlar gösterilir.
 - **Client-side filtreleme**: TÜİK API'si URL key filter desteklemediğinden, `boyut_filtre` parametresiyle parse sonrası filtreleme yapılır.
 - **Otomatik temizlik**: Tek değerli sütunlar (ör. "Not Applicable") veri çıktısından otomatik kaldırılır.
@@ -51,7 +54,7 @@ tuik_ara(query="producer price index")
 
 ### `tuik_listele` — Tüm dataflow'ları listeleme
 
-Mevcut 346 production dataflow'u listeler.
+(Şu an için) mevcut 346 production dataflow'u listeler.
 
 ```
 tuik_listele()
@@ -141,13 +144,6 @@ Sunucu, LLM'i şu adımları izlemeye yönlendirir:
 ```
 
 Bu akış sayesinde 25.000+ satırlık ham veri yerine sadece 3 satır döner.
-
-## API Kaynağı
-
-- **Endpoint:** `https://nsiws.tuik.gov.tr/rest`
-- **Protokol:** SDMX REST 2.1 (JSON formatı)
-- **Kimlik doğrulama:** Gerekmez
-- **Rate limit:** Bilinmiyor — büyük sorgularda dikkatli olun
 
 ## Geliştirme
 
