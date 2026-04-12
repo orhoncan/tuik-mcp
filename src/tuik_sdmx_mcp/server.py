@@ -6,14 +6,16 @@ import sys
 from contextlib import asynccontextmanager
 
 import httpx
-from fastmcp import Context, FastMCP
+from fastmcp import FastMCP
 
 from tuik_sdmx_mcp.sdmx import (
     fetch_data,
     fetch_dataflows,
-    fetch_metadata,
+    fetch_structure,
+    filter_rows,
     parse_dataflows,
     parse_sdmx_data,
+    parse_structure,
     resolve_version,
     search_dataflows,
 )
@@ -41,7 +43,26 @@ async def server_lifespan(server: FastMCP):
     sys.stderr.write("TÜİK SDMX MCP: shutting down\n")
 
 
-mcp = FastMCP("TÜİK SDMX", lifespan=server_lifespan)
+mcp = FastMCP(
+    "TÜİK SDMX",
+    instructions=(
+        "TÜİK SDMX veri erişim sunucusu. Token tasarrufu için şu akışı izle:\n"
+        "\n"
+        "1. ARAMA: Kullanıcı veri istediğinde tuik_ara ile anahtar kelime ara. "
+        "Sonuçları kullanıcıya göster ve hangisini istediğini sor.\n"
+        "\n"
+        "2. META: Kullanıcı dataflow seçtikten sonra tuik_meta ile boyutları getir. "
+        "Birden fazla değeri olan boyutları (single_value=false) kullanıcıya göster. "
+        "Hangi kırılımları ve tarih aralığını istediğini sor.\n"
+        "\n"
+        "3. VERİ ÇEK: Kullanıcının seçimine göre tuik_cek'i tarih aralığı (baslangic/bitis) "
+        "ve boyut filtresi (boyut_filtre) ile çağır. Filtresiz çekme!\n"
+        "\n"
+        "ÖNEMLİ: Asla filtresiz veri çekme — büyük dataflow'lar 25.000+ satır döner. "
+        "Her zaman önce meta ile yapıyı anla, sonra filtreli çek."
+    ),
+    lifespan=server_lifespan,
+)
 
 
 @mcp.tool(
@@ -91,16 +112,18 @@ async def tuik_ara(
 @mcp.tool(
     name="tuik_meta",
     description=(
-        "Bir dataflow'un metadata'sını getirir: dimension'lar, codelist'ler, "
-        "mevcut değerler. Veri çekmeden önce hangi filtrelerin mümkün olduğunu "
-        "anlamak için kullanın."
+        "Bir dataflow'un boyut yapısını getirir: her boyutun kodu, adı ve mümkün değerleri. "
+        "Veri çekmeden ÖNCE mutlaka çağır — kullanıcıya kırılım seçeneklerini göstermek "
+        "ve filtre oluşturmak için gerekli. "
+        "Tek değerli boyutlar (single_value=true) otomatik gizlenir, "
+        "sadece seçim gerektiren boyutlar döner."
     ),
 )
 async def tuik_meta(
     dataflow_id: str,
     version: str = "",
 ) -> dict:
-    """Get metadata (dimensions, codelists) for a dataflow.
+    """Get dimension structure for a dataflow (no data fetched).
 
     Args:
         dataflow_id: Dataflow ID (e.g. "DF_ISGUCU_AYLIK_TEMEL_ISGUCU_V1")
@@ -110,42 +133,56 @@ async def tuik_meta(
         version = resolve_version(_state.get("dataflows_all", []), dataflow_id)
 
     async with httpx.AsyncClient() as client:
-        raw = await fetch_metadata(client, dataflow_id, version)
+        raw = await fetch_structure(client, dataflow_id, version)
 
-    dimensions = []
-    for dtype in ("series", "observation"):
-        for dim in raw.get("structure", {}).get("dimensions", {}).get(dtype, []):
-            dimensions.append(
-                {
-                    "id": dim["id"],
-                    "name": dim.get("name", ""),
-                    "type": dtype,
-                    "position": dim.get("keyPosition", dim.get("position", 0)),
-                    "values": [v["name"] for v in dim.get("values", [])],
-                    "value_count": len(dim.get("values", [])),
-                }
-            )
-    return {"dataflow_id": dataflow_id, "version": version, "dimensions": dimensions}
+    dimensions = parse_structure(raw)
+
+    # Only return multi-valued dimensions (the ones the user needs to choose from)
+    filterable = [d for d in dimensions if not d["single_value"]]
+
+    # Summarise single-valued dimensions for context
+    fixed = {
+        d["id"]: d["values"][0]["name"]
+        for d in dimensions
+        if d["single_value"] and d["values"]
+    }
+
+    return {
+        "dataflow_id": dataflow_id,
+        "version": version,
+        "filterable_dimensions": filterable,
+        "fixed_dimensions": fixed,
+    }
 
 
 @mcp.tool(
     name="tuik_cek",
     description=(
-        "TÜİK SDMX API'den veri çeker. Sonuç: düz dict listesi, her satır bir gözlem. "
-        "Tek değerli sütunlar (ör. 'Not Applicable') otomatik temizlenir. "
-        "Büyük dataflow'lar yavaş olabilir (120sn timeout). "
-        "Filtreleme: dönen veriden istemci tarafında filtreleyin (TIME_PERIOD >= '2023' gibi)."
+        "TÜİK SDMX API'den veri çeker. Önce tuik_meta ile boyutları öğren, "
+        "sonra bu tool'u tarih aralığı ve boyut filtresiyle çağır.\n"
+        "baslangic/bitis: sunucu tarafı dönem filtresi (ör. '2025-01', '2026-03').\n"
+        "boyut_filtre: client tarafı boyut filtresi — tuik_meta'dan gelen "
+        "boyut değer name'lerini kullan. Ör: {\"FAAL_GRUP\": [\"Total\"], \"DEGISIM\": [\"Index\"]}\n"
+        "Filtresiz çekme — büyük dataflow'lar 25.000+ satır döner!"
     ),
 )
 async def tuik_cek(
     dataflow_id: str,
     version: str = "",
+    baslangic: str = "",
+    bitis: str = "",
+    boyut_filtre: dict[str, list[str]] | None = None,
 ) -> dict:
-    """Fetch data from a TÜİK SDMX dataflow.
+    """Fetch data from a TÜİK SDMX dataflow with filters.
 
     Args:
         dataflow_id: Dataflow ID (e.g. "DF_ISGUCU_AYLIK_TEMEL_ISGUCU_V1")
         version: Version string (e.g. "1.0"). Leave empty for latest.
+        baslangic: Start period (e.g. "2024-01"). Only returns data from this period onward.
+        bitis: End period (e.g. "2025-12"). Only returns data up to this period.
+        boyut_filtre: Dimension filter dict. Keys are dimension IDs from tuik_meta,
+                      values are lists of allowed value names.
+                      Example: {"FAAL_GRUP": ["Total"], "DEGISIM": ["Index", "Annual rate of change (%)"]}
 
     Returns:
         dict with "rows" (list of observation dicts) and "row_count".
@@ -154,7 +191,14 @@ async def tuik_cek(
         version = resolve_version(_state.get("dataflows_all", []), dataflow_id)
 
     async with httpx.AsyncClient() as client:
-        raw = await fetch_data(client, dataflow_id, version)
+        raw = await fetch_data(
+            client, dataflow_id, version,
+            start_period=baslangic, end_period=bitis,
+        )
 
     rows = parse_sdmx_data(raw)
+
+    if boyut_filtre:
+        rows = filter_rows(rows, boyut_filtre)
+
     return {"dataflow_id": dataflow_id, "version": version, "row_count": len(rows), "rows": rows}

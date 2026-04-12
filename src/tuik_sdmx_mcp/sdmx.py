@@ -115,25 +115,102 @@ async def fetch_data(
     dataflow_id: str,
     version: str = "1.0",
     agency: str = "TR",
+    key: str = "",
+    start_period: str = "",
+    end_period: str = "",
 ) -> dict:
-    """Fetch data for a specific dataflow."""
-    url = f"{BASE_URL}/data/{agency},{dataflow_id},{version}/"
-    resp = await client.get(url, headers=HEADERS, timeout=TIMEOUT)
+    """Fetch data for a specific dataflow.
+
+    Args:
+        key: SDMX key filter (dimension values separated by dots,
+             wildcards with empty positions). E.g. "..1." to filter
+             3rd dimension to value index 1.
+        start_period: ISO period lower bound (e.g. "2024-01").
+        end_period: ISO period upper bound (e.g. "2025-12").
+    """
+    url = f"{BASE_URL}/data/{agency},{dataflow_id},{version}/{key}"
+    params: dict[str, str] = {}
+    if start_period:
+        params["startPeriod"] = start_period
+    if end_period:
+        params["endPeriod"] = end_period
+    resp = await client.get(url, headers=HEADERS, timeout=TIMEOUT, params=params)
     resp.raise_for_status()
     return resp.json()
 
 
-async def fetch_metadata(
+async def fetch_structure(
     client: httpx.AsyncClient,
     dataflow_id: str,
     version: str = "1.0",
     agency: str = "TR",
 ) -> dict:
-    """Fetch full metadata (dimensions, codelists) for a dataflow."""
-    url = f"{BASE_URL}/dataflow/{agency}/{dataflow_id}/{version}/?detail=Full&references=all"
-    resp = await client.get(url, headers=HEADERS, timeout=60.0)
+    """Fetch dimension structure without data using detail=nodata."""
+    url = f"{BASE_URL}/data/{agency},{dataflow_id},{version}/"
+    resp = await client.get(
+        url, headers=HEADERS, timeout=60.0, params={"detail": "nodata"}
+    )
     resp.raise_for_status()
     return resp.json()
+
+
+def parse_structure(json_data: dict) -> list[dict]:
+    """Parse dimension structure from a nodata response.
+
+    Returns dimensions ordered by position. Each dimension has:
+    - id, name, position, values (list of {id, name}), value_count
+    Single-valued dimensions are marked with single_value=True.
+    """
+    dimensions: list[dict] = []
+    for dtype in ("series", "observation"):
+        for dim in (
+            json_data.get("structure", {})
+            .get("dimensions", {})
+            .get(dtype, [])
+        ):
+            values = [
+                {"id": v["id"], "name": v.get("name", v["id"])}
+                for v in dim.get("values", [])
+            ]
+            dimensions.append(
+                {
+                    "id": dim["id"],
+                    "name": dim.get("name", ""),
+                    "position": dim.get("keyPosition", dim.get("position", 0)),
+                    "type": dtype,
+                    "values": values,
+                    "value_count": len(values),
+                    "single_value": len(values) <= 1,
+                }
+            )
+    dimensions.sort(key=lambda d: d["position"])
+    return dimensions
+
+
+def filter_rows(
+    rows: list[dict],
+    boyut_filtre: dict[str, list[str]],
+) -> list[dict]:
+    """Filter parsed rows by dimension code IDs.
+
+    Args:
+        rows: Flat observation dicts from parse_sdmx_data.
+        boyut_filtre: {dimension_id: [allowed_code_name, ...]}
+            Values are matched against the human-readable names in rows.
+    """
+    if not boyut_filtre:
+        return rows
+    filtered = []
+    for row in rows:
+        match = True
+        for dim_id, allowed in boyut_filtre.items():
+            if dim_id in row and row[dim_id] not in allowed:
+                match = False
+                break
+        if not match:
+            continue
+        filtered.append(row)
+    return filtered
 
 
 def resolve_version(
