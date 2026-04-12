@@ -40,6 +40,15 @@ uv sync
 uv run tuik-sdmx-mcp serve
 ```
 
+## Ekran Görüntüleri
+
+<img width="879" height="362" alt="image" src="https://github.com/user-attachments/assets/3a0687db-f04c-4fc1-9919-7a93cc6ef724" />
+
+<img width="585" height="472" alt="image" src="https://github.com/user-attachments/assets/f6bd152c-0148-4d34-a511-82d7c7af3e79" />
+
+<img width="1225" height="451" alt="image" src="https://github.com/user-attachments/assets/95bde6f2-03e9-4a09-9c63-d257da6f7787" />
+
+
 ## Araçlar (Tools)
 
 ### `tuik_ara` — Dataflow arama
