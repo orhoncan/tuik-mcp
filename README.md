@@ -5,7 +5,7 @@
 346 dataflow üzerinden (şimdilik) Türkiye'nin resmi istatistiklerine — nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.
 doğrudan LLM üzerinden erişim sağlar.
 
-*SDMX servisi henüz beta aşamasında olup veriler güncel olmayabilir, zamanla sunucu vb. değişebilir.*
+*SDMX servisi henüz beta aşamasında olduğundan veriler güncel/doğru olmayabilir, zamanla sunucu vb. değişebilir, kodlar bozulabilir. Bu açıdan resmi duyuruyu beklemekte fayda var.*
 
 ## Özellikler
 
