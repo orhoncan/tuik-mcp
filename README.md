@@ -7,6 +7,8 @@ doğrudan LLM üzerinden erişim sağlar.
 
 *SDMX servisi henüz beta aşamasında olduğundan veriler güncel/doğru olmayabilir, zamanla sunucu vb. değişebilir, kodlar bozulabilir. Bu açıdan resmi duyuruyu beklemekte fayda var.*
 
+**TÜİK şimdilik SDMX'i dışarıya kapatmış görünüyor, MCP çalışmayacaktır.**
+
 ## Özellikler
 
 - **Guided workflow**: Sunucu, LLM'i adım adım akışı yönlendirir: önce arama, sonra kırılım seçimi, sonra filtreli veri çekme. Token kullanımını minimize eder.
