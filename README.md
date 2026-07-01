@@ -5,8 +5,6 @@
 362 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
 doğrudan LLM üzerinden erişim sağlar.
 
-*SDMX servisi henüz beta aşamasında olduğundan veriler güncel/doğru olmayabilir, zamanla sunucu vb. değişebilir, kodlar bozulabilir.*
-
 ## Kimlik doğrulama (API Anahtarı gerekli)
 
 TÜİK, SDMX servislerine erişimi TÜİK giriş sistemi üzerinden alınan kısa ömürlü (varsayılan 300 sn) Bearer token ile korur.
