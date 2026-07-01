@@ -1,4 +1,4 @@
-"""TÜİK SDMX MCP Server — 4 tools for Turkish statistical data."""
+"""TÜİK SDMX MCP Server - 4 tools for Turkish statistical data."""
 
 from __future__ import annotations
 
@@ -8,6 +8,12 @@ from contextlib import asynccontextmanager
 import httpx
 from fastmcp import FastMCP
 
+from tuik_sdmx_mcp.auth import (
+    MissingAPIKeyError,
+    TokenServiceError,
+    has_api_key,
+    validate_and_save_key,
+)
 from tuik_sdmx_mcp.sdmx import (
     fetch_data,
     fetch_dataflows,
@@ -22,31 +28,90 @@ from tuik_sdmx_mcp.sdmx import (
 
 _state: dict = {}
 
+# Anahtar hiç tanımlı değilken araçların döndürdüğü yönlendirme. LLM'in
+# kullanıcıdan anahtarı isteyip tuik_anahtar_ayarla ile kaydetmesini sağlar.
+_NO_KEY_HINT = (
+    "TÜİK SDMX API anahtarı tanımlı değil. Kullanıcıdan TÜİK Veri "
+    "Portalı'ndan (veriportali.tuik.gov.tr, Kullanıcı Bilgileri > SMS "
+    "doğrulaması) aldığı API anahtarını iste ve tuik_anahtar_ayarla "
+    "aracıyla kaydet. Anahtar bir kez kaydedilince kalıcıdır."
+)
+
+
+async def _load_dataflow_cache(client: httpx.AsyncClient) -> None:
+    """Dataflow listesini çekip cache'e yazar; sonucu _state'e işler.
+
+    Boş liste dönerse (ör. beklenmedik yanıt yapısı) başarı sayılmaz; cache'i
+    boş bırakıp hata yükseltir ki araçlar sessizce boş katalog döndürmesin.
+    """
+    refs = await fetch_dataflows(client)
+    dataflows = parse_dataflows(refs, production_only=True)
+    dataflows_all = parse_dataflows(refs, production_only=False)
+    if not dataflows_all:
+        raise RuntimeError(
+            "TÜİK SDMX dataflow listesi boş döndü. Servis yanıtı beklenenden "
+            "farklı olabilir; anahtarınızı ve servis durumunu kontrol edin."
+        )
+    _state["dataflows"] = dataflows
+    _state["dataflows_all"] = dataflows_all
+    _state["startup_error"] = None
+    sys.stderr.write(
+        f"TÜİK SDMX MCP: {len(_state['dataflows'])} production dataflow cached\n"
+    )
+
 
 @asynccontextmanager
 async def server_lifespan(server: FastMCP):
     """Cache production dataflow list at startup."""
     sys.stderr.write("TÜİK SDMX MCP: starting...\n")
-    async with httpx.AsyncClient() as client:
-        try:
-            refs = await fetch_dataflows(client)
-            _state["dataflows"] = parse_dataflows(refs, production_only=True)
-            _state["dataflows_all"] = parse_dataflows(refs, production_only=False)
-            sys.stderr.write(
-                f"TÜİK SDMX MCP: {len(_state['dataflows'])} production dataflow cached\n"
-            )
-        except Exception as e:
-            sys.stderr.write(f"TÜİK SDMX MCP: dataflow cache failed — {e}\n")
-            _state["dataflows"] = []
-            _state["dataflows_all"] = []
+    _state["dataflows"] = []
+    _state["dataflows_all"] = []
+    _state["startup_error"] = None
+    if not has_api_key():
+        # Anahtar yoksa sunucu yine de açılır; kullanıcı tuik_anahtar_ayarla
+        # ile ekleyene kadar veri araçları yönlendirme mesajı döndürür.
+        _state["startup_error"] = _NO_KEY_HINT
+        sys.stderr.write(f"TÜİK SDMX MCP: {_NO_KEY_HINT}\n")
+    else:
+        async with httpx.AsyncClient() as client:
+            try:
+                await _load_dataflow_cache(client)
+            except MissingAPIKeyError as e:
+                # Anahtar kaydı bu arada silinmiş olabilir; anahtar iste.
+                _state["startup_error"] = f"{e}\n\n{_NO_KEY_HINT}"
+                sys.stderr.write(f"TÜİK SDMX MCP: {e}\n")
+            except TokenServiceError as e:
+                # Anahtar var ama token servisi hata verdi; mesaj zaten açıklıyor.
+                _state["startup_error"] = str(e)
+                sys.stderr.write(f"TÜİK SDMX MCP: {e}\n")
+            except Exception as e:
+                _state["startup_error"] = (
+                    f"Dataflow listesi alınamadı: {e}. API anahtarı doğru mu "
+                    "ve TÜİK SDMX servisi erişilebilir mi kontrol edin."
+                )
+                sys.stderr.write(f"TÜİK SDMX MCP: dataflow cache failed - {e}\n")
     yield {}
     sys.stderr.write("TÜİK SDMX MCP: shutting down\n")
+
+
+def _require_ready() -> None:
+    """Başlangıçta dataflow cache dolamadıysa net bir hata yükselt.
+
+    Böylece anahtar eksik/geçersiz ya da servis erişilemezken araçlar sessizce
+    boş sonuç döndürmek yerine sebebi (ve anahtar ekleme yolunu) açıkça bildirir.
+    """
+    if _state.get("startup_error") and not _state.get("dataflows_all"):
+        raise RuntimeError(_state["startup_error"])
 
 
 mcp = FastMCP(
     "TÜİK SDMX",
     instructions=(
         "TÜİK SDMX veri erişim sunucusu. Token tasarrufu için şu akışı izle:\n"
+        "\n"
+        "0. ANAHTAR: Araçlar 'API anahtarı tanımlı değil' hatası verirse, "
+        "kullanıcıdan TÜİK Veri Portalı API anahtarını iste ve tuik_anahtar_ayarla "
+        "ile kaydet. Anahtar TUIK_API_KEY ortam değişkeninde varsa bu adım gerekmez.\n"
         "\n"
         "1. ARAMA: Kullanıcı veri istediğinde tuik_ara ile anahtar kelime ara. "
         "Sonuçları kullanıcıya göster ve hangisini istediğini sor.\n"
@@ -58,11 +123,43 @@ mcp = FastMCP(
         "3. VERİ ÇEK: Kullanıcının seçimine göre tuik_cek'i tarih aralığı (baslangic/bitis) "
         "ve boyut filtresi (boyut_filtre) ile çağır. Filtresiz çekme!\n"
         "\n"
-        "ÖNEMLİ: Asla filtresiz veri çekme — büyük dataflow'lar 25.000+ satır döner. "
+        "ÖNEMLİ: Asla filtresiz veri çekme - büyük dataflow'lar 25.000+ satır döner. "
         "Her zaman önce meta ile yapıyı anla, sonra filtreli çek."
     ),
     lifespan=server_lifespan,
 )
+
+
+@mcp.tool(
+    name="tuik_anahtar_ayarla",
+    description=(
+        "TÜİK SDMX API anahtarını kaydeder. Diğer araçlar 'API anahtarı tanımlı "
+        "değil' hatası verdiğinde kullan: kullanıcıdan TÜİK Veri Portalı "
+        "(veriportali.tuik.gov.tr) API anahtarını al ve buraya ver. "
+        "Anahtar token servisiyle doğrulanır, geçerliyse kalıcı olarak kaydedilir "
+        "ve dataflow listesi hemen yüklenir. TUIK_API_KEY ortam değişkeni zaten "
+        "tanımlıysa buna gerek yoktur."
+    ),
+)
+async def tuik_anahtar_ayarla(api_key: str) -> dict:
+    """Validate a TÜİK SDMX API key and persist it.
+
+    Args:
+        api_key: The API key from TÜİK Veri Portalı (Kullanıcı Bilgileri screen,
+                 after SMS phone verification).
+
+    Returns:
+        dict with saved config path and the number of dataflows cached.
+    """
+    async with httpx.AsyncClient() as client:
+        path = await validate_and_save_key(client, api_key)
+        await _load_dataflow_cache(client)
+    return {
+        "ok": True,
+        "config": str(path),
+        "dataflow_count": len(_state.get("dataflows", [])),
+        "mesaj": "API anahtarı doğrulandı ve kaydedildi. Artık veri çekebilirsiniz.",
+    }
 
 
 @mcp.tool(
@@ -81,6 +178,7 @@ async def tuik_listele(
     Args:
         include_test: If True, include non-production (test) dataflows too.
     """
+    _require_ready()
     key = "dataflows_all" if include_test else "dataflows"
     return _state.get(key, [])
 
@@ -89,7 +187,7 @@ async def tuik_listele(
     name="tuik_ara",
     description=(
         "TÜİK SDMX dataflow'larında anahtar kelime araması yapar. "
-        "Dataflow adları İngilizce — hem Türkçe hem İngilizce terimler deneyin "
+        "Dataflow adları İngilizce - hem Türkçe hem İngilizce terimler deneyin "
         "(ör. 'unemployment', 'labour', 'population', 'trade'). "
         "Tüm terimler eşleşmelidir (AND mantığı)."
     ),
@@ -104,6 +202,7 @@ async def tuik_ara(
         query: Search terms (space-separated, all must match). Example: "labour force"
         include_test: If True, also search non-production dataflows.
     """
+    _require_ready()
     key = "dataflows_all" if include_test else "dataflows"
     dataflows = _state.get(key, [])
     return search_dataflows(dataflows, query)
@@ -113,7 +212,7 @@ async def tuik_ara(
     name="tuik_meta",
     description=(
         "Bir dataflow'un boyut yapısını getirir: her boyutun kodu, adı ve mümkün değerleri. "
-        "Veri çekmeden ÖNCE mutlaka çağır — kullanıcıya kırılım seçeneklerini göstermek "
+        "Veri çekmeden ÖNCE mutlaka çağır - kullanıcıya kırılım seçeneklerini göstermek "
         "ve filtre oluşturmak için gerekli. "
         "Tek değerli boyutlar (single_value=true) otomatik gizlenir, "
         "sadece seçim gerektiren boyutlar döner."
@@ -129,6 +228,7 @@ async def tuik_meta(
         dataflow_id: Dataflow ID (e.g. "DF_ISGUCU_AYLIK_TEMEL_ISGUCU_V1")
         version: Version string (e.g. "1.0"). Leave empty for latest.
     """
+    _require_ready()
     if not version:
         version = resolve_version(_state.get("dataflows_all", []), dataflow_id)
 
@@ -161,9 +261,9 @@ async def tuik_meta(
         "TÜİK SDMX API'den veri çeker. Önce tuik_meta ile boyutları öğren, "
         "sonra bu tool'u tarih aralığı ve boyut filtresiyle çağır.\n"
         "baslangic/bitis: sunucu tarafı dönem filtresi (ör. '2025-01', '2026-03').\n"
-        "boyut_filtre: client tarafı boyut filtresi — tuik_meta'dan gelen "
+        "boyut_filtre: client tarafı boyut filtresi - tuik_meta'dan gelen "
         "boyut değer name'lerini kullan. Ör: {\"FAAL_GRUP\": [\"Total\"], \"DEGISIM\": [\"Index\"]}\n"
-        "Filtresiz çekme — büyük dataflow'lar 25.000+ satır döner!"
+        "Filtresiz çekme - büyük dataflow'lar 25.000+ satır döner!"
     ),
 )
 async def tuik_cek(
@@ -187,6 +287,7 @@ async def tuik_cek(
     Returns:
         dict with "rows" (list of observation dicts) and "row_count".
     """
+    _require_ready()
     if not version:
         version = resolve_version(_state.get("dataflows_all", []), dataflow_id)
 

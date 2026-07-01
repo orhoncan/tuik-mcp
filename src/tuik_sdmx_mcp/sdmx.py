@@ -1,11 +1,19 @@
-"""TÜİK SDMX REST API client."""
+"""TÜİK SDMX REST API client.
+
+TÜİK SDMX servisi (nsiws.tuik.gov.tr) Bearer token ile korunur; her istek
+`auth.auth_headers` üzerinden Authorization başlığı taşır. Veri ve metaveri,
+`Accept: application/json` ile SDMX-JSON 1.0 (top-level header/dataSets/
+structure) biçiminde döner - parse fonksiyonları bu yapıya göre çalışır.
+"""
 
 from __future__ import annotations
 
 import httpx
 
+from tuik_sdmx_mcp.auth import auth_headers
+
 BASE_URL = "https://nsiws.tuik.gov.tr/rest"
-HEADERS = {"Accept": "application/json"}
+AGENCY = "TR"
 TIMEOUT = 120.0
 
 
@@ -103,8 +111,9 @@ def search_dataflows(
 
 async def fetch_dataflows(client: httpx.AsyncClient) -> dict:
     """Fetch all dataflow references from SDMX API."""
+    headers = await auth_headers(client)
     resp = await client.get(
-        f"{BASE_URL}/dataflow/", headers=HEADERS, timeout=60.0
+        f"{BASE_URL}/dataflow/{AGENCY}/all", headers=headers, timeout=60.0
     )
     resp.raise_for_status()
     return resp.json().get("references", {})
@@ -134,7 +143,8 @@ async def fetch_data(
         params["startPeriod"] = start_period
     if end_period:
         params["endPeriod"] = end_period
-    resp = await client.get(url, headers=HEADERS, timeout=TIMEOUT, params=params)
+    headers = await auth_headers(client)
+    resp = await client.get(url, headers=headers, timeout=TIMEOUT, params=params)
     resp.raise_for_status()
     return resp.json()
 
@@ -147,8 +157,9 @@ async def fetch_structure(
 ) -> dict:
     """Fetch dimension structure without data using detail=nodata."""
     url = f"{BASE_URL}/data/{agency},{dataflow_id},{version}/"
+    headers = await auth_headers(client)
     resp = await client.get(
-        url, headers=HEADERS, timeout=60.0, params={"detail": "nodata"}
+        url, headers=headers, timeout=60.0, params={"detail": "nodata"}
     )
     resp.raise_for_status()
     return resp.json()

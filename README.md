@@ -2,18 +2,30 @@
 
 [TÜİK](https://www.tuik.gov.tr/) (Türkiye İstatistik Kurumu) SDMX REST API'sine erişim sağlayan bir [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) sunucusu.
 
-346 dataflow üzerinden (şimdilik) Türkiye'nin resmi istatistiklerine — nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.
+362 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
 doğrudan LLM üzerinden erişim sağlar.
 
-*SDMX servisi henüz beta aşamasında olduğundan veriler güncel/doğru olmayabilir, zamanla sunucu vb. değişebilir, kodlar bozulabilir. Bu açıdan resmi duyuruyu beklemekte fayda var.*
+*SDMX servisi henüz beta aşamasında olduğundan veriler güncel/doğru olmayabilir, zamanla sunucu vb. değişebilir, kodlar bozulabilir.*
 
-**TÜİK şimdilik SDMX'i dışarıya kapatmış görünüyor, MCP çalışmayacaktır.**
+## Kimlik doğrulama (API Anahtarı gerekli)
+
+TÜİK, SDMX servislerine erişimi TÜİK giriş sistemi üzerinden alınan kısa ömürlü (varsayılan 300 sn) Bearer token ile korur.
+Sunucu bu token'ı sizin adınıza otomatik alır ve süresi dolmadan yeniler; sizden yalnızca bir **API Anahtarı** ister.
+
+1. [Veri Portalı](https://veriportali.tuik.gov.tr/tr)'na kullanıcı adı/şifre ile girin.
+2. **Kullanıcı Bilgileri** ekranından SMS ile telefon doğrulamasını tamamlayın; üretilen **API Anahtarı**'nı kopyalayın.
+   (Türkiye telefon hattınız yoksa `info@tuik.gov.tr` üzerinden talep edebilirsiniz - bkz. [SDMX web servis dokümantasyonu](https://veriportali.tuik.gov.tr/tr/sdmx-web-service-documentation).)
+
+Anahtarı sunucuya iki yoldan verebilirsiniz:
+
+- **Ortam değişkeni (önerilen):** `TUIK_API_KEY` olarak tanımlayın (aşağıdaki MCP yapılandırmasına bakın).
+- **Kurduktan sonra sorulur:** Ortam değişkeni yoksa sunucu yine de açılır. İlk veri isteğinde araçlar "API anahtarı tanımlı değil" der; asistan anahtarınızı sorar ve `tuik_anahtar_ayarla` aracıyla kaydeder. Anahtar doğrulanıp `~/.config/tuik-sdmx-mcp/config.json` dosyasına (0600 izinle) yazılır ve kalıcı olur - bir daha sorulmaz.
 
 ## Özellikler
 
 - **Guided workflow**: Sunucu, LLM'i adım adım akışı yönlendirir: önce arama, sonra kırılım seçimi, sonra filtreli veri çekme. Token kullanımını minimize eder.
 - **Akıllı metadata**: `detail=nodata` ile veri çekmeden boyut yapısını getirir. Tek değerli boyutlar otomatik gizlenir, sadece seçim gerektiren kırılımlar gösterilir.
-- **Client-side filtreleme**: TÜİK API'si URL key filter desteklemediğinden, `boyut_filtre` parametresiyle parse sonrası filtreleme yapılır.
+- **Client-side filtreleme**: API, seri anahtarı (series key) sırasına göre URL filtresi destekler; bu sunucu ise kullanım kolaylığı için `boyut_filtre` ile boyut adına göre parse sonrası filtreleme yapar (kod sırası bilmeye gerek kalmaz).
 - **Otomatik temizlik**: Tek değerli sütunlar (ör. "Not Applicable") veri çıktısından otomatik kaldırılır.
 
 ## Kurulum
@@ -27,7 +39,10 @@ doğrudan LLM üzerinden erişim sağlar.
   "mcpServers": {
     "tuik-sdmx": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/orhoncan/tuik-mcp", "tuik-sdmx-mcp", "serve"]
+      "args": ["--from", "git+https://github.com/orhoncan/tuik-mcp", "tuik-sdmx-mcp", "serve"],
+      "env": {
+        "TUIK_API_KEY": "buraya-api-anahtarinizi-yazin"
+      }
     }
   }
 }
@@ -39,6 +54,7 @@ doğrudan LLM üzerinden erişim sağlar.
 git clone https://github.com/orhoncan/tuik-mcp.git
 cd tuik-mcp
 uv sync
+export TUIK_API_KEY="..."   # Veri Portalı'ndan alınan API anahtarı
 uv run tuik-sdmx-mcp serve
 ```
 
@@ -53,7 +69,17 @@ uv run tuik-sdmx-mcp serve
 
 ## Araçlar (Tools)
 
-### `tuik_ara` — Dataflow arama
+### `tuik_anahtar_ayarla` - API anahtarı kaydetme
+
+`TUIK_API_KEY` tanımlı değilse, API anahtarını doğrulayıp kalıcı olarak kaydeder. Diğer araçlar "API anahtarı tanımlı değil" hatası verdiğinde kullanılır.
+
+```
+tuik_anahtar_ayarla(api_key="019f1ebd-...")
+```
+
+**Dönen:** `{"ok": true, "config": "...config.json", "dataflow_count": 362, ...}`
+
+### `tuik_ara` - Dataflow arama
 
 Anahtar kelimeyle dataflow arar. Dataflow adları İngilizce olduğundan hem Türkçe hem İngilizce terimler deneyin.
 
@@ -63,16 +89,16 @@ tuik_ara(query="producer price index")
 
 **Dönen:** Eşleşen dataflow'ların listesi (id, name, description, version).
 
-### `tuik_listele` — Tüm dataflow'ları listeleme
+### `tuik_listele` - Tüm dataflow'ları listeleme
 
-(Şu an için) mevcut 346 production dataflow'u listeler.
+Mevcut 362 production dataflow'u listeler.
 
 ```
 tuik_listele()
 tuik_listele(include_test=True)  # test dataflow'ları da dahil
 ```
 
-### `tuik_meta` — Boyut yapısı
+### `tuik_meta` - Boyut yapısı
 
 Bir dataflow'un kırılım seçeneklerini getirir. Veri çekmeden önce mutlaka çağırın.
 
@@ -115,7 +141,7 @@ tuik_meta(dataflow_id="DF_YIUFE_EDO")
 }
 ```
 
-### `tuik_cek` — Veri çekme
+### `tuik_cek` - Veri çekme
 
 Tarih aralığı ve boyut filtresiyle veri çeker.
 
