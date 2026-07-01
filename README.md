@@ -5,6 +5,8 @@
 362 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
 doğrudan LLM üzerinden erişim sağlar.
 
+Mevcut tüm dataflow'ların (SDMX üçlüsü + İngilizce başlık) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
+
 ## Kimlik doğrulama (API Anahtarı gerekli)
 
 TÜİK, SDMX servislerine erişimi TÜİK giriş sistemi üzerinden alınan kısa ömürlü (varsayılan 300 sn) Bearer token ile korur.
@@ -89,7 +91,7 @@ tuik_ara(query="producer price index")
 
 ### `tuik_listele` - Tüm dataflow'ları listeleme
 
-Mevcut 362 production dataflow'u listeler.
+Mevcut 362 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`no, uclu, baslik` kolonları).
 
 ```
 tuik_listele()

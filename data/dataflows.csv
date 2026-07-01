@@ -1,0 +1,365 @@
+﻿no,uclu,baslik
+1,"TR,DF_ISGUCU_AYLIK_FIIL_CALISMA_SURE_C,1.0",Actual Working Hours of Employed
+2,"TR,DF_ISGUCU_AYLIK_FIIL_CALISMA_SURE_O,1.0",Actual Working Hours of Employed-Revision History
+3,"TR,DF_DOGUM_IL_YASA_OZEL_DOGHIZ,1.0",Age Specific Fertility Rate by Provinces
+4,"TR,DF_DOGUM_YASA_OZEL_DOGHIZ,1.0",Age Specific Fertility Rates
+5,"TR,DF_ADNKS_T19,1.1",Age dependency ratio
+6,"TR,DF_ADNKS_T24,1.1",Age dependency ratio by provinces
+7,"TR,DF_TARIMSAL_GIRDI_FIYAT_ENDEKSI_DEGISIM_V2,1.0",Agricultural Input Price Index Numbers and Rate of Changes [2020=100]
+8,"TR,DF_TARIM_URUNLERI_GRUP_MADDE_ENDEKS_TAORBA_V2,1.0",Agriculture-PPI [2020=100] Group and Item Indices (TAORBA-2008_2)
+9,"TR,DF_HAVA_EMISYON_HESAP,1.0",Air Emission Accounts by Economic Activity
+10,"TR,DF_SU_ATIKSU_ALICI_ORTAM_TUR_DESARJ_V1,1.0",Amount of Wastewater Discharged by Receiving Bodies
+11,"TR,DF_SU_ATIKSU_ALICI_ORTAM_BELEDIYE_SEBEKE_V1,1.0",Amount of Wastewater Discharged from Municipal Sewerage by Receiving Bodies
+12,"TR,DF_SU_ATIKSU_DOGAL_KAYNAK_CEKILEN_MIKTAR_V1,1.0",Amount of Water Abstracted from Natural Resources
+13,"TR,DF_SU_ATIKSU_DOGAL_KAYNAK_SEBEKE_SUYU_MIKTAR_V1,1.0",Amount of Water Supplied from Natural Resources and Water Supply Networks
+14,"TR,DF_SU_ATIKSU_DOGRUDAN_ALICI_ORTAM_DESARJ_V1,1.0",Amount of wastewater Discharged to Receiving Bodies
+15,"TR,DF_ADNKS_T29,1.1",Annual growth rate of population and population density of provinces by years
+16,"TR,DF_ADNKS_T38,1.1",Annual growth rate of population by provinces and districts
+17,"TR,DF_ADNKS_T25,1.1",Average size of households by provinces
+18,"TR,DF_BILANCO_HESAPLAR_V2,1.0",Balance Sheet of Companies by Economic Activity and Year
+19,"TR,DF_DOGUM_TEMEL_DOG_GOST,1.0",Basic Fertility Indicators
+20,"TR,DF_SEKTOR_BILANCO_TEMEL_V1,1.0",Basic Indicators By Economic Activity
+21,"TR,DF_YAPISAL_EFGTG,1.0",Basic Indicators by Economic Activity
+22,"TR,DF_SEKTOR_BILANCO_KOBI_V1,1.0",Basic Indicators by Economic Activity and Year
+23,"TR,DF_YAPISAL_EFGTG_BUYUKLUK,1.0",Basic Indicators by Size Class and Economic Activity
+24,"TR,DF_YAPISAL_EFGTG_IMALAT_TEKNO,1.0",Basic Indicators in Manufacturing Industry by Technology Level
+25,"TR,DF_BIYOTEKNOLOJI_AR_GE_HARCAMALARI_V2,1.0",Biotechnology R&D expenditures
+26,"TR,DF_BD_DOGUM_OLUM,1.1",Birth and Death Indicators
+27,"TR,DF_BD_HUKUKI_DOGUM_OLUM,1.2",Birth and Death Indicators by Legal Form
+28,"TR,DF_BD_SEKTOREL_DOGUM_OLUM,1.1",Birth and Death Indicators by Sectors
+29,"TR,DF_DOGUM_ANNEYASGR,1.0",Births by Age Group of Mother
+30,"TR,DF_DOGUM_BABA_UYRUK,1.0",Births by Citizenship of Father
+31,"TR,DF_DOGUM_ANNE_UYRUK,1.0",Births by Citizenship of Mother
+32,"TR,DF_DOGUM_AY,1.0",Births by Months
+33,"TR,DF_DOGUM_EGT_YASGR,1.0",Births by Mother's Age Group and Birth Order
+34,"TR,DF_DOGUM_ANNEYAS_ULKE,1.0",Births by Mother's Age Group and Country of Birth
+35,"TR,DF_DOGUM_BABAYASGR,1.0",Births by Province and Age Group of Father
+36,"TR,DF_DOGUM_ANNEMEDENI,1.0",Births by Province and Legal Marital Status of Mother
+37,"TR,DF_DOGUM_ANNEYASGR_BOLGE,1.0",Births by Provinces and Age Group of Mother and Regions
+38,"TR,DF_DOGUM_EVLSURE,1.0",Births by Provinces and Mother's Duration of Marriage
+39,"TR,DF_DOGUM,1.0",Births by mother's Age Group and Mother's Educational Level
+40,"TR,DF_YO_OGRENIM_DIL,1.0",Brain drain rate by language of higher education instruction
+41,"TR,DF_UNIVERSITE_TUR_BURS_DURUM,1.0",Brain drain rate by university type and scholarship status
+42,"TR,DF_EGITIM_OGRETIM_ALAN,1.0",Brain drain rate of higher education graduates by fields of education and training
+43,"TR,DF_TAMAMLANAN_BOLUM_BGO,1.0",Brain drain rate of higher education graduates by programme
+44,"TR,DF_YO_MEZUN_BEYIN_GOCU_ORAN,1.0",Brain drain rate of higher education graduates by sex
+45,"TR,DF_DOLAYL_ARGE_MERKEZI_YONETM_BUTCE,1.0",Central government budget appropriations and outlays on R&D
+46,"TR,DF_MERKEZ_YONETM_BUTCE_SOSYO_EKONOMK_HEDEF,1.0",Central government budget appropriations and outlays on R&D by socio-economic objectives (TRY)
+47,"TR,DF_TAMAMLAMA_ORAN,1.0",Completion rate by education level and sex
+48,"TR,DF_UFE_INSAAT_V1,1.0",Construction Cost Index and Rate of Change [2015=100]
+49,"TR,DF_INSAAT_URETIM_ENDEKS_V1_O,1.0",Construction Production Index [2021=100]-Revision History
+50,"TR,DF_UH_BH_KATKI,1.0",Contribution of regions to the GDP percentage change of Türkiye (with chain linked volume index) (%)
+51,"TR,DF_DOGUM_KDH,1.0",Crude Birth Rate by Provinces (‰)
+52,"TR,DF_KABA_BOSANMA,1.0",Crude Divorce Rate by Provinces (‰)
+53,"TR,DF_EVLENME_KABA,1.1",Crude Marriage Rate by Provinces
+54,"TR,DF_GENEL_DEVLET_ACIK_FAZLA_BORC_1,1.0",Deficit/Surplus and Debt Levels of General Government
+55,"TR,DF_MOTORLU_KARA_TASIT_YAKIT_CINSI_V4,1.0",Distribution of Cars Registered to the Traffic According to Fuel Type
+56,"TR,DF_MOTORLU_KARA_TASIT_OTOMOBIL_RENK_V2,1.0",Distribution of Cars Registered to the Traffic by Colours
+57,"TR,DF_MOTORLU_KARA_TASIT_MOTOR_SILINDIR_HACIM_V2,1.0",Distribution of Cars Registered to the Traffic by Engine Size
+58,"TR,DF_MOTORLU_KARA_TASIT_MARKA_V2,1.0",Distribution of Cars Registered to the Traffic by Trademarks
+59,"TR,DF_TASIT_KILOMETRE_OTOMOBIL_YAKIT_TUR_V1,1.0",Distribution of Distance Travelled by Passenger Cars
+60,"TR,DF_MOTORLU_KARA_TASIT_KAYDI_YAPILAN_IL_V2,1.0",Distribution of Road Motor Vehicles Registered to the Traffic by Provinces
+61,"TR,DF_TASIT_KILOMETRE_TOPLAM_YAKIT_TURU_V2,1.0",Distribution of Total Vehicle-Kilometer by Fuel Type
+62,"TR,DF_BD_DOGUM_TEKNO_DUZEY,1.1",Distribution of enterprises born in manufacturing by technology level
+63,"TR,DF_BD_SEKTOREL_HIZLI_BUYUYEN,1.1",Distribution of high growth enterprises by sectors
+64,"TR,DF_GOC_ULKE_DAGILIM,1.0",Distribution of higher education graduates by country of emigration
+65,"TR,DF_RES_ILAN_REKLAM_BEDEL_TUR,1.0",Distribution of official announcement and advertising fees by type
+66,"TR,DF_RESMI_ILAN_KONTENJAN,1.0",Distribution of periodical publishing official announcements and advertisements by publication and quotas
+67,"TR,DF_BED_NUFUS_DAGILIM,1.0",Distribution of population by the level of education completed
+68,"TR,DF_E_YOYAS,1.0",Distribution of tertiary education graduates according to sex and age group (25+ aged)
+69,"TR,DF_BOSANMA_EGT_YASGR,1.0",Divorces by Age Group and Educational Attainment
+70,"TR,DF_BOSANMA_DOGUM_ULKE,1.0",Divorces by Country of Birth of Male and Female
+71,"TR,DF_BOSANMA_EVLSURE_YASGR,1.0",Divorces by Duration of Marriage and Age Group
+72,"TR,DF_BOSANMA_EGT_KARSILIKLI,1.0",Divorces by Educational Attainment of Male and Female
+73,"TR,DF_BOSANMA_ANNEBABA_VEL,1.0",Divorces by Number of Children Given to Parent's Guardianship
+74,"TR,DF_BOSANMA_ESYASFARK,1.0",Divorces by Province and Age Difference of Spouses
+75,"TR,DF_BOSANMA_DAVASURE,1.0",Divorces by Provinces and Duration of Divorce Case
+76,"TR,DF_BOSANMA_EVL_SURE,1.0",Divorces by Provinces and Duration of Marriage
+77,"TR,DF_BOSANMA_CINSIYET_YASGR,1.0",Divorces by Sex and Age Group
+78,"TR,DF_UFE_V6,1.0",Domestic Producer Price Index - Weights of the components and their impact on index changes
+79,"TR,DF_YIUFE_EDO_V1,1.0",Domestic Producer Price Index and Rate of Change [2003=100]
+80,"TR,DF_EKONOMIK_GUVEN_SDMX_C,1.0",Economic Confidence Index and Change Rates
+81,"TR,DF_EKONOMIK_GUVEN_SDMX_O,1.0",Economic Confidence Index and Change Rates - Revision History
+82,"TR,DF_BD_HUKUK_DURUM_ALL,1.1",Economic Indicators of Enterprises by Legal Status
+83,"TR,DF_BD_SEKTOREL_ALL_V1,1.0",Economic Indicators of Enterprises by Sectors
+84,"TR,DF_BD_KURULUS_YIL,1.1",Economic indicators of enterprises by date of foundation
+85,"TR,DF_EGITIM_HARCAMA_FINANS_KAYNAK,1.0",Education expenditure by level of education and financial source
+86,"TR,DF_EGITIM_HARCAMA_EGITIM_DUZEY_OGRENCI_BASI,1.0",Education expenditure per student by level of education
+87,"TR,DF_EGITIM_HARCAMA_HIZMET_SUNUCU,1.0",Education expenditures by service providers and level of education
+88,"TR,DF_YUKSEKOGRETIM_MEZUN_ORAN,1.0",Educational attainment (tertiary) of the population aged 25-34 by sex
+89,"TR,DF_MEZUN_NUFUS_ORAN,1.0",Educational attainment of the population by sex (25+ aged)
+90,"TR,DF_EMISYON_DEGISIM_ORAN,1.1",Emissions Rate of Change
+91,"TR,DF_DOLAYLI_ARGE_GIRISIM_EKONOMIK_FAAL_V2,1.0",Enterprises benefiting from indirect R&D tax incentives by economic activities
+92,"TR,DF_DOLAYLI_ARGE_BUYUKLUK_GRUP_V2,1.0",Enterprises benefiting from indirect R&D tax incentives by size class
+93,"TR,DF_BIYOTEKNOLOJI_TEKNIK_ARASTIRAN_KULLANAN,1.0",Enterprises researching/using biotechnology techniques
+94,"TR,DF_ERP_CRM_SCM,1.0","Enterprises using enterprise resource planning (ERP), customer relationship management (CRM), supply chain management (SCM) and business intelligence (BI) software by economic activitiy and size group (%)"
+95,"TR,DF_KAMU_ILETISIM,1.0",Enterprises using internet for interaction with public authorities by economic activity and size group (%)
+96,"TR,DF_DF_CEVRESEL_MAL_HIZMET_SEKTOR,1.0",Environmental Goods and Services Sector Output by Environmental Activity
+97,"TR,DF_DF_CEVRE_KORUMA_V2,1.0",Environmental Protection Expenditure by Domains
+98,"TR,DF_CEVRE_KORUMA_HARCAMA_SEKTORLERI,1.0",Environmental Protection Expenditure by Institutional
+99,"TR,DF_CEVRESEL_VERGI,1.0",Environmental Taxes
+100,"TR,DF_ENERJISIZ_IHRACAT_BDE,1.0",Export Unit Value Index Excluding Energy
+101,"TR,DF_ALTINSIZ_IHRACAT_BDE,1.0",Export Unit Value Index Excluding Gold
+102,"TR,DF_ALTINSIZ_ENERJISIZ_IHRACAT_BDE,1.0",Export Unit Value Index Excluding Gold and Energy
+103,"TR,DF_ENERJISIZ_IME,1.0",Export Volume Index Excluding Energy
+104,"TR,DF_ALTINSIZ_IME,1.0",Export Volume Index Excluding Gold
+105,"TR,DF_ALTINSIZ_ENERJISIZ_IME,1.0",Export Volume Index Excluding Gold and Energy
+106,"TR,DF_IHRACAT_BIRIM_DEGER_V1,1.0",Export unit value index
+107,"TR,DF_IHRACAT_MIKTAR_ENDEKS_V1,1.0",Export volume index
+108,"TR,DF_TAKVIM_ETKISINDEN_ARINDIRILMIS_IHRACAT_V2,1.0",Export volume index (Seasonally and calendar adjusted)
+109,"TR,DF_TRAFIK_KAZA_OLUMLU_YARALANMALI_KAZA_KUSUR_V1,1.0",Faults Causing Road Traffic Accidents Involving Death or Injury
+110,"TR,DF_EVLENME_ILK_YASGR_EGT,1.0",First Marriages by Age Group and Educational Attainment
+111,"TR,DF_EVLENME_ILK,1.0",First Marriages by Province and Age Group
+112,"TR,DF_ADNKS_T13,1.1",Foreign population by country of citizenship
+113,"TR,DF_ADNKS_T12,1.1",Foreign population by provinces and sex
+114,"TR,DF_ADNKS_T01,1.1",Foreign-born population by age group and sex
+115,"TR,DF_ADNKS_T02,1.1",Foreign-born population by place of birth and sex
+116,"TR,DF_MUHTEMEL_EGITIM_SURE_CINSIYET_ESITSIZLIK_ENDEKS,1.0","Gender parity index by school life expectancy, province and level of education"
+117,"TR,DF_DOGUM_GDH,1.0",General Fertility Rate by Provinces
+118,"TR,DF_DOLAYLI_ARGE_TESVIK_V2,1.0",Government tax relief for R&D
+119,"TR,DF_SERA_GAZI_EMISYONLARI,1.0",Greenhouse Gas Emisssions
+120,"TR,DF_SGP_GORE_GSYH_BIREYSEL_TUKETIM_ENDEKSLERI_V3,1.0",Gross domestic product per capita and actual individual consumption indices based on purchasing power parity by countries
+121,"TR,DF_BD_HIZLI_BUYUYEN,1.1",High growth and gazelle enterprises indicators
+122,"TR,DF_ENERJISIZ_ITHALAT_BDE,1.0",Import Unit Value Index Excluding Energy
+123,"TR,DF_ALTINSIZ_ITHALAT_BDE,1.0",Import Unit Value Index Excluding Gold
+124,"TR,DF_ALTINSIZ_ENERJISIZ_ITHALAT_BDE,1.0",Import Unit Value Index Excluding Gold and Energy
+125,"TR,DF_ENERJISIZ_ITHALAT_ME,1.0",Import Volume Index Excluding Energy
+126,"TR,DF_ALTINSIZ_ITHALAT_ME,1.0",Import Volume Index Excluding Gold
+127,"TR,DF_ALTINSIZ_ITHALAT_ENERJISIZ_ME,1.0",Import Volume Index Excluding Gold and Energy
+128,"TR,DF_ITHALAT_BIRIM_DEGER_ENDEKSI_V1,1.0",Import unit value index
+129,"TR,DF_ITHALAT_MIKTAR_ENDEKS_V1,1.0",Import volume index
+130,"TR,DF_TAKVIM_ETKISINDEN_ARINDIRILMIS_ITHALAT_V2,1.0",Import volume index (Seasonally and calendar adjusted)
+131,"TR,DF_GELIR_TABLOSU_V2,1.1",Income Statement of Companies by Economic Activity and Year
+132,"TR,DF_INSAAT_URETIM_ENDEKS_C,1.0",Index and Change Rates of Production in Construction [2021=100]
+133,"TR,DF_BIYOTEKNOLOJI_EGITIM_DURUMU,1.0",Indicators on the educational status of individuals engaged in biotechnology activities
+134,"TR,DF_GUVEN_ENDEKS_SEKTOREL_EGILIM_SDMX,1.0","Indices Concerning the Tendency and Monthly Changes by Services, Retail Trade and Construction Sectors"
+135,"TR,DF_TUKETICI_EGILIM_SDMX,1.0",Indices concerning the consumer tendency and monthly changes
+136,"TR,DF_SANAYI_URETIM_ENDEKS_ETKI_C,1.0",Industrial Production Index Impact [2021=100]
+137,"TR,DF_SANAYI_URETIM_ENDEKS_ANA_C,1.0",Industrial Production Index [2021=100] (Main Indices)
+138,"TR,DF_SANAYI_URETIM_ENDEKS_ALT_C,1.0",Industrial Production Index [2021=100] (Sub Indices)
+139,"TR,DF_SANAYI_URETIM_ENDEKS_ANA_O,1.0",Industrial Production Index [2021=100]-Revision History ( Main Indices)
+140,"TR,DF_SANAYI_URETIM_ENDEKS_SINIF_O,1.0",Industrial Production Index [2021=100]-Revision History (Class - 4 digit level Indices)
+141,"TR,DF_SANAYI_URETIM_ENDEKS_GRUP_O,1.0",Industrial Production Index [2021=100]-Revision History (Group -  3 digit level Indices )
+142,"TR,DF_KURUMSAL_SEKTOR_HESAPLARI_CARI_FIYATLARLA_V1,1.0","Institutional Sector Accounts, Current Prices"
+143,"TR,DF_UHTI_EKONOMIK,1.0",International Trade in Services by Economic Groups
+144,"TR,DF_UHTI_COGRAFI,1.0",International Trade in Services by Geographical Breakdowns
+145,"TR,DF_UHTI_HIZMET_TURU,1.0",International Trade in Services by Type of Services
+146,"TR,DF_UHTI_HIZMET_EKONOMIK,1.0",International Trade in Services by Type of Services and Economic Groups
+147,"TR,DF_UHTI_HIZMET_COGRAFI,1.0",International Trade in Services by Type of Services and Geographical Breakdowns
+148,"TR,DF_TEKIL_ZIY_SAY_SAYFA_GOR_SAY,1.0",Internet news websites publishing official announcements and the number of unique visitors and page views
+149,"TR,DF_COCUKLARDA_BILIISIM_TEKNOLOJILERI_T3,1.0",Internet usage purposes of children who use Internet regularly by sex and age group
+150,"TR,DF_COCUKLARDA_BILIISIM_TEKNOLOJILERI_T3,1.1",Internet usage purposes of children who use Internet regularly by sex and age group
+151,"TR,DF_ISGUCU_MALIYET,1.0",Labour cost indices
+152,"TR,DF_ISGUCU_GIRDI,1.0",Labour input indices
+153,"TR,DF_DNG_YS,1.0",Life Expectancy at Birth of Selected Countries by Sex (Year)
+154,"TR,DF_GENEL_DEVLET_ANA_BILESEN_V2,1.0",Main Aggregates of General Government
+155,"TR,DF_ISGUCU_AYLIK_TEMEL_ISGUCU_C,1.0",Main Labour Force Indicators
+156,"TR,DF_ISGUCU_AYLIK_TEMEL_ISGUCU_O,1.0",Main Labour Force Indicators-Revision History
+157,"TR,DF_GUVEN_ENDEKS_FAALIYET_KISITLAMA_SDMX,1.0",Main factors limiting activities by sectors (%)
+158,"TR,DF_ATIK_IMALAT_SANAYI_GOSTERGELER_V1,1.0",Manufacturing Industry Waste Indicators
+159,"TR,DF_ATIK_IMALAT_SANAYI_YONETIM_V1,1.0",Manufacturing Industry Waste Management Statistics
+160,"TR,DF_SU_ATIKSU_IMALAT_SANAYI_V1,1.0",Manufacturing Industry Wastewater Indicators
+161,"TR,DF_SU_ATIKSU_IMALAT_GOSTERGE_V1,1.0",Manufacturing Industry Water Indicators
+162,"TR,DF_EVLENME_EGT_YASGR,1.0",Marriages by Age Group and Educational Attainment
+163,"TR,DF_EVLENME_KARSILIKLI_EGT,1.0",Marriages by Educational Attainment of Male and Female
+164,"TR,DF_EVLENME_YASFARK,1.0",Marriages by Province and Age Difference of Spouses
+165,"TR,DF_EVLENME_YASGR_CINS,1.0","Marriages by Province, Age Group and Sex"
+166,"TR,DF_MADDE_AKIS_HESAPLARI,1.0",Material Flow Accounts
+167,"TR,DF_EVLENME_ORT_ILK_YAS,1.0",Mean Age at First Marriage by Provinces
+168,"TR,DF_EVLENME_ORT_YAS,1.0",Mean Age at Marriage by Provinces
+169,"TR,DF_DOGUM_ORTYAS_ILKDOG,1.0",Mean Age of Mother at Birth of First Child by Provinces
+170,"TR,DF_DOGUM_ANNE_ORTYAS,1.0",Mean Age of Mother by Provinces
+171,"TR,DF_ORTALAMA_EGITIM_SURE,1.0",Mean years of schooling
+172,"TR,DF_ADNKS_T23,1.1",Median age by provinces and sex
+173,"TR,DF_ADNKS_T28,1.1","Median age by years and sex, Population Censuses - ABPRS"
+174,"TR,DF_SUT_URUNLERI_AYLIK_V2,1.0",Milk and Dairy Products - Basic Products - Monthly
+175,"TR,DF_SUT_URUNLER_YILLK_V2_2023,1.0",Milk and Dairy Products - Product Details (2023 and earlier) - Annual
+176,"TR,DF_SUT_URUNLERI_YILLIK_V2,1.0",Milk and Dairy Products - Product Details - Annual
+177,"TR,DF_ATIK_MADEN_ISLETMELERI_V1,1.0",Mining Establishments Waste Statistics
+178,"TR,DF_DOGUM_COGUL,1.0",Multiple Births
+179,"TR,DF_ATIK_BELEDIYE_ARITMA_CAMURU_V1,1.0",Municipal Sewage Sludge Statistics
+180,"TR,DF_ATIK_BELEDIYE_ATIKYONETIMI_V1,1.0",Municipal Waste Management Statistics (by Provinces)
+181,"TR,DF_ATIK_BELEDIYE_HIZMET_V1,1.0",Municipal Waste Services Statistics (by Provinces)
+182,"TR,DF_ATIK_BELEDIYE_HIZMET_YONETIM_GOSTERGE_V1,1.0",Municipal Waste Services and Management Indicators
+183,"TR,DF_SU_ATIKSU_BELEDIYE_GOSTERGELER_V1,1.0",Municipal Wastewater Indicators
+184,"TR,DF_SU_ATIKSU_BELEDIYE_GOSTERGE_V1,1.0",Municipal Water Indicators
+185,"TR,DF_SU_ATIKSU_BELEDIYE_ICME_KULLANMA_TESIS_V1,1.0",Municipalities Drinking Water Treatment Plants (by Provinces)
+186,"TR,DF_SU_ATIKSU_BELEDIYE_ARITMA_TESIS_V1,1.0",Municipalities Wastewater Treatment Plants (by Provinces)
+187,"TR,DF_MERKEZI_YONETIM_BUTCESI,1.0",National public funding to transnationally coordinated R&D
+188,"TR,DF_YDUFE_EDO_V1,1.0",Non-Domestic Producer Price Index and Rate of Change [2010=100]
+189,"TR,DF_YAYIN_TUR_TIRAJ,1.0",Number and annual domestic circulation of newspapers publishing official advertisements by type of publication
+190,"TR,DF_ADNKS_T18,1.1",Number and population of municipalities
+191,"TR,DF_TRAFIK_KAZA_GUN_ISIGI_OLU_YARALI_V1,1.0","Number of Accidents Involving Death or Injury, Persons Killed and Injured by Daylight Condition"
+192,"TR,DF_TARMSAL_ALET,1.1",Number of Agricultural Tools and Machinery
+193,"TR,DF_BOSANMA_VEL_VER_COC,1.0",Number of Children Given to Guardianship and Proportion of Children Given to Parent's Guardianship
+194,"TR,DF_TARIM_BICERDOVER_YAS_GRUP,1.0",Number of Combine Harvesters (By Age Group)
+195,"TR,DF_BOSANMA_VEL_AL_COC,1.0",Number of Divorced Persons by The Number of Children Whose Guardianship Were Taken by Parents
+196,"TR,DF_BR_FAALIYET_BUYUKLUK_GIRISIM,1.0",Number of Enterprises by Economic Activity and Size Group
+197,"TR,DF_BR_FAALIYET_GIRISIM,1.0",Number of Enterprises by Economic Activity(2020 and onwards)
+198,"TR,DF_BR_FAALIYET_GIRISIM_ONCE,1.0",Number of Enterprises by Economic Activity(Before 2020)
+199,"TR,DF_BR_BUYUKLUK_GIRISIM,1.0",Number of Enterprises by Size Group
+200,"TR,DF_TRAFIK_KAZA_OLUMLU_YARALANMALI_KUSUR_V1,1.0",Number of Faults Causing Traffic Accidents Involving Death or Injury
+201,"TR,DF_MUZE_SAYISI_V3,1.0",Number of Museums
+202,"TR,DF_TRAFIK_KAZA_NUFUS_TASIT_BASINA_OLU_YARALI_V1,1.0","Number of Persons Killed and Injured in Road Traffic Accidents per Population, Vehicle and Billion Vehicle-km"
+203,"TR,DF_MOTORLU_KARA_TASIT_YIL_ICINDE_DEVRI_YAPILAN_V2,1.0",Number of Road Motor Vehicles Handed over the Traffic During the Year by SR Level 1
+204,"TR,DF_MOTORLU_KARA_TASIT_KAYDI_YAPILAN_IBBS_V2,1.0",Number of Road Motor Vehicles Registered to the Traffic During the Year by SR Level 1
+205,"TR,DF_MOTORLU_KARA_TASIT_KAYDI_SILINEN_IBBS_V1,1.0",Number of Road Motor Vehicles Withdrawn During the Year by SR Level 1
+206,"TR,DF_MOTORLU_KARA_TASIT_KULLANIM_AMAC_V2,1.0",Number of Road Motor Vehicles by Aim of Use
+207,"TR,DF_MOTORLU_KARA_TASIT_YAKIT_TURU_V3,1.0",Number of Road Motor Vehicles by Kind of Fuel Used
+208,"TR,DF_MOTORLU_KARA_TASIT_MODEL_YIL_V2,1.0",Number of Road Motor Vehicles by Model Years
+209,"TR,DF_TRAFIK_KAZA_TASIT_SAYI_TRAFIK_KAZA_V1,1.0",Number of Road Traffic Accidents Involving Death or Injury and Results by Number of Vehicle Involved
+210,"TR,DF_TRAFIK_KAZA_HAFTANIN_GUNLERI_OLU_YARALI_V1,1.0","Number of Road Traffic Accidents Involving Death or Injury, Persons Killed and Injured by Days of the Week"
+211,"TR,DF_TRAFIK_KAZA_OLUM_YARALANMA_KAZA_OLU_YARALI_V1,1.0","Number of Road Traffic Accidents Involving Death or Injury, Persons Killed and Injured by Months"
+212,"TR,DF_TARIM_MAK_TRAKTOR,1.0",Number of Tractors (By Horsepower)
+213,"TR,DF_TRAFIK_KAZA_OLUSUM_SONUC_V1,1.0",Number of Traffic Accidents Involving Death or Injury and Results by Formation of the Accidents
+214,"TR,DF_TRAFIK_KAZA_YERLESIM_YER_OLUMLU_YARALANMALI_V1,1.0","Number of Traffic Accidents Involving Death or Injury, Persons Killed and Injured According to Settlement"
+215,"TR,DF_TRAFIK_KAZA_OLU_YARALI_V2,1.0","Number of Traffic Accidents, Persons Killed and Injured by Province"
+216,"TR,DF_TRAFIK_KAZA_OLUMLU_YARALANMALI_KAZA_SURUCU_V2,1.0","Number of Vehicles Involved in Accidents with Death or Injury, Drivers Killed and Injured by Vehicle Type"
+217,"TR,DF_TRAFIK_KAZA_KAYITLI_ARAC_OLU_YARALI_V1,1.0","Number of Vehicles Registered, Accident, Persons Killed and Injured"
+218,"TR,DF_TRAFIK_KAZA_OLUMLU_YARALANMALI_KAZAZEDE_V1,1.0",Number of Victims of Traffic Accidents Involving Death or Injury
+219,"TR,DF_MUZE_ORENYER_ZYARETCI,1.0",Number of Visitors to the Museums and Ruins
+220,"TR,DF_TRAFIK_KAZA_INCINEBILIR_YOL_KULLANICI_PAY_V1,1.0","Number of Vulnerable Road Users (1) Killed, Injured and Share in Total Killed and Injured Persons"
+221,"TR,DF_BIYOTEK_PATENT,1.0",Number of biotechnology patent applications and approved biotechnology patents of enterprises active in biotechnology by size group
+222,"TR,DF_RES_ILAN_GAZ_INT_EGITIM_CINSYET,1.0",Number of employees in newspapers and internet news websites publishing official announcements by their educational level and gender
+223,"TR,DF_RES_ILAN_GAZ_INT_HAB_KADRO_CINSIYET,1.0",Number of employees of newspapers and internet news websites publishing official announcements by the title of the staff and gender
+224,"TR,DF_BIYOTEK_FAALIYET,1.0",Number of enterprises active in biotechnology
+225,"TR,DF_BIYOTEKNLOJI_TEKNIK_FAALIYET,1.0",Number of enterprises researching/using biotechnology techniques and activities conducted for biotechnology techniques
+226,"TR,DF_BIYOTEK_UYGULAMA,1.0",Number of enterprises using biotechnology applications
+227,"TR,DF_BIYOTEK_UYGULAMA_FAALIYET,1.0",Number of enterprises using biotechnology applications and biotechnology activitiesc conducted for biotechnology applications
+228,"TR,DF_ADNKS_T07,1.1",Number of households by size and type
+229,"TR,DF_ADNKS_T06,1.1",Number of households by type and provinces
+230,"TR,DF_DERGI_YAYIN_SIKLIK,1.0",Number of magazines publishing official advertisements by frequency of publication
+231,"TR,DF_YURT_ICI_TIRAJ,1.0",Number of newspapers publishing official announcements by frequency of publication and annual domestic circulation
+232,"TR,DF_AY_YAYM_ILAN_ADET,1.0",Number of official announcements published by month
+233,"TR,DF_ADNKS_T08,1.1",Number of one-family households by type and provinces
+234,"TR,DF_SURELI_YAY_IC_TUR,1.0",Number of periodical publications by type of content
+235,"TR,DF_MUZE_ESER_SAY,1.0",Number of works in Museums
+236,"TR,DF_YIL_SURELI_YAYINN_SAYI,1.0",Numbers of periodicals receiving official announcements and advertisements by years
+237,"TR,DF_SU_ATIKSU_SEBEKE_TESIS_BELEDIYE_NITELIK_V1,1.0",Number and Population of Municipalities Served by Network and Treatment Plants (by Provinces)
+238,"TR,DF_AY_TUR_RESM_ILAN_ADET,1.0",Official announcement and advertisement fees by month and type
+239,"TR,DF_COCUKLARDA_BILISIM_TEKNOLOJILER_T9,1.0",Opinions of the children on the situations caused by the time they spend in front of the screen by sex and age group
+240,"TR,DF_ATIK_ORGANIZE_SANAYI_BOLGELERI_V1,1.0",Organized Industrial Zones Waste Statistics
+241,"TR,DF_UCRETLI_CALISAN_ISTATISTIKLERI_C,1.0",Paid Employee Statistics
+242,"TR,DF_UCRETLI_CALISAN_ISTATISTIKLERI_O,1.0",Paid Employee Statistics-Revision History
+243,"TR,DF_KISI_BASI_SERA_GAZ_EMISYON,1.1",Per Capita GHG Emissions
+244,"TR,DF_ULKELER_KISI_BASINA_REEL_GSYH_SGP,1.0",Per Capita Real GDP by Countries
+245,"TR,DF_ULKELER_KISI_BASINA_HACIM_ENDEKSLERI,1.0",Per Capita Volume Indices by Countries
+246,"TR,DF_ADNKS_T34,1.1",Periodic population size and proportion by age group and sex
+247,"TR,DF_TRAFIK_KAZA_YAS_GRUBU_OLEN_YARALANAN_V1,1.0",Persons Killed and Injured in Road Traffic Accidents by Age Groups and Gender
+248,"TR,DF_COCUKLARDA_BILISIM_TEKNOLOJI_T5,1.0",Phone usage behaviours of children who use mobile phone/smartphone regularly by sex and age group
+249,"TR,DF_ULUSAL_EGITIM_ISTATISTIK_BED_NUFUS,1.0",Population by attained education level and sex
+250,"TR,DF_OKURYAZAR_CINSIYET_NUFUS,1.0",Population by literacy and sex
+251,"TR,DF_ADNKS_T21,1.1",Population by marital status and sex
+252,"TR,DF_ADNKS_T03,1.1",Population by place of birth and sex
+253,"TR,DF_ADNKS_T05,1.1",Population by province of residence and place of birth
+254,"TR,DF_ADNKS_T4,1.2",Population by province of residence and place of birth status
+255,"TR,DF_ADNKS_T16,1.0","Population by province, age group and sex"
+256,"TR,DF_ADNKS_T10,1.1","Population by province, marital status and sex"
+257,"TR,DF_ADNKS_T36,1.1","Population by urban-rural classification, age group and sex"
+258,"TR,DF_ADNKS_T37,1.1","Population by urban-rural classification, sex and provinces"
+259,"TR,DF_ADNKS_T27,1.1","Population by years, age group and sex, Population Censuses - ABPRS"
+260,"TR,DF_ADNKS_T20,1.1",Population density by provinces
+261,"TR,DF_ADNKS_T15,1.1",Population of province/district centers and towns/villages by age group and sex
+262,"TR,DF_ADNKS_T14,1.1",Population of province/district centers and towns/villages by province and sex by province
+263,"TR,DF_ADNKS_T26,1.1","Population of province/district centers and towns/villages by years and sex, Population Censuses - ABPRS"
+264,"TR,DF_ADNKS_T22,1.1","Population of province/district centers, towns/villages by provinces and districts"
+265,"TR,DF_ADNKS_T35,1.1",Population of provinces by broad age groups
+266,"TR,DF_ADNKS_T30,1.1",Population of provinces by years
+267,"TR,DF_ADNKS_T17,1.1","Population, annual growth rate of population, number of provinces, districts, towns, villages, and population density"
+268,"TR,DF_GUVEN_ENDEKS_FAALIYET_ARTTIRMA_SDMX,1.0",Possible rates on the enterprises' status of activities to increase in the case of increased demand without any change in their current resources by sectors (%)
+269,"TR,DF_KUMES_HAYVANCILIK_URUN_V1,1.0",Poultry products
+270,"TR,DF_ULKELER_FIYAT_DUZEYI_ENDEKSLERI,1.0",Price Level Indices by Countries
+271,"TR,DF_ULKELER_FIILI_BIREYSEL_TUKETIM_ENDEKS_V2,1.0",Price level indices for actual individual consumption by countries
+272,"TR,DF_TARIM_URUNLERI_UFE_MADDE_FIYAT_V2,1.0",Producer Price Index of Agricultural Products [2020=100] Item Prices (TL)
+273,"TR,DF_TARIM_URUNLERI_UFE_DEGISIM_V1,1.0",Producer Price Index of Agricultural Products and Rates of Change [2020=100]
+274,"TR,DF_DOGUM_SIRA,1.0",Proportion of Births by Birth Order
+275,"TR,DF_COCUK_BILISIM_TEKNO_KULLANIM_ORAN_CINSIYET_YAS,1.0",Proportion of ICT usage for children by sex and age group
+276,"TR,DF_COCUK_BILISIM_TEKNO_KULLANIM_ORAN_CINSIYET_YAS,1.1",Proportion of ICT usage for children by sex and age group
+277,"TR,DF_BILISIM_TEKNOLOJILERI_KULLANIM_T7,1.0",Proportion of children using ICT products for their own use alone by sex and age group
+278,"TR,DF_DIJITAL_OYUN_DUSUNCE_T__8,1.0",Proportion of children using ICT products for their own use alone by sex and age group
+279,"TR,DF_COCUKLARDA_BLISIM_TEKNOLOJILERI_T4,1.0",Proportion of children using social media platforms by sex and age group
+280,"TR,DF_BILISIM_UZMAN,1.0",Proportion of enterprises employing ICT/IT specialists by size group (%)
+281,"TR,DF_WEB_SITE_SAHIP_GIRISIM_ORAN,1.0",Proportion of enterprises having website by economic activity and size group
+282,"TR,DF_BILISIM_UZMAN_ALIM,1.0",Proportion of enterprises recruited or tried to recruit ICT/IT specialists and having difficulties to fill vacancies by size group (%)
+283,"TR,DF_BUY_GRUP_WEB_SATIS,1.0",Proportion of enterprises that had web sales by size group
+284,"TR,DF_BUY_GRUP_EKO_FAALIYET,1.0",Proportion of enterprises that had web sales or EDI type sales by economic activity and size group
+285,"TR,DF_BUY_GRUP_EKO_FAAL_MAL_HIZMET_SATIS,1.0",Proportion of enterprises that had web sales or EDI type sales which use computers (%)
+286,"TR,DF_BUY_GRUP_BULUT_BILISIM,1.0",Proportion of enterprises using cloud computing services by size group (%)
+287,"TR,DF_INTERNET_ERISIM_SAHIP,1.0","Proportion of enterprises with internet access by economic activity, size group and type of broadband connection (%)"
+288,"TR,DF_COCUKLARDA_BILISIM_TEKNOLOJILERI_T2,1.0","Proportion of regular use of ICT by sex, age group and average daily usage time"
+289,"TR,DF_ADNKS_T09,1.1",Province of civil registration by province of residence
+290,"TR,DF_TURKIYE_OECD_KARSILASTIRMALI_SGP_GOSTERGE_V3,1.0",Purchasing Power Parity Indicators in Türkiye within the Framework of the Comparisons for OECD Countries
+291,"TR,DF_ULKELER_SGP_DEGERLERI,1.0",Purchasing Power Parity by Countries
+292,"TR,DF_COCUKLARAD_BILISIM_TEKNOLOJILERI_T5,1.0",Purposes of phone usage of children who use mobile phone/smartphone regularly by sex and age group
+293,"TR,DF_BOLGESEL_FIYAT_DUZEYI_GENEL_V1,1.0",Regional Price Level Indices for Consumption Expenditures
+294,"TR,DF_BOLGESEL_FIYAT_DUZEYI_TUKETIM_ANA_GRUPLAR_V1,1.0",Regional Price Level Indices for the Main Groups of Consumption Expenditures
+295,"TR,DF_BOLGESEL_SGP_TUKETIM_ANA_GRUPLAR_V1,1.0",Regional Purchasing Power Parities for the Main Groups of Consumption Expenditures
+296,"TR,UH_BH_GSYH_CARI,1.0",Regional gross domestic product (at current prices)
+297,"TR,UH_BH_GSYH_HACIM,1.0",Regional gross domestic product (with chain linked volume index)
+298,"TR,DF_UH_BH_KISI_BASI,1.0",Regional gross domestic product per capita
+299,"TR,DF_UH_BH_KB_ENDEKS,1.0",Regional gross domestic product per capita index (at current prices) [TR=100]
+300,"TR,DF_SATIS_SEKLI_SATIS_DURUMU_V3,1.0",Sales by State and Type (Türkiye)
+301,"TR,DF_SATIS_SEKLI_DURUMU_ILILCE_V3,1.0",Sales by State and Type (by provinces)
+302,"TR,DF_YABANCILARA_SATIS_V3,1.0",Sales to Foreigners (Türkiye)
+303,"TR,DF_YABANCILARA_SATILAR_ILILCE_V3,1.0",Sales to Foreigners (by provinces and districts)
+304,"TR,DF_UYRUKLARA_GORE_SATISLAR_V3,1.0",Sales to Foreigners by Nationalities (Türkiye)
+305,"TR,DF_UYRUKLARA_GORE_ILILCE_V3,1.0",Sales to Foreigners by Nationalities (by provinces and districts)
+306,"TR,DF_MUHTEMEL_EGIITIM_SURE_CINSIYET_EGITIM_SURE,1.0",School life expectancy by sex and level of education
+307,"TR,DF_MUHTEMEL_EGITIM_SURE_ISCED_0,1.0","School life expectancy by sex and provinces, ISCED 0 (pre-primary education)"
+308,"TR,DF_MUHTEMEL_EGITIM_SURE_ISCED1_3,1.0","School life expectancy by sex and provinces, ISCED 1-3"
+309,"TR,DF_MUHTEMEL_EGITIM_SURE_ISCED_1_8,1.0","School life expectancy by sex and provinces, ISCED 1-8 (primary to tertiary)"
+310,"TR,DF_MEVSIM_TAKVIM_V3,1.0",Seasonally and Calendar Adjusted Sales
+311,"TR,DF_UH_BH_PAY_SEKTOREL,1.0",Sectoral share of gross domestic product (%)
+312,"TR,DF_HIZMET_URETIM_ENDEKS_C,1.0",Services Production Index and Percentage Change [2021=100]
+313,"TR,DF_HIZMET_URETIM_ENDEKS_O,1.0",Services Production Index and Percentage Change [2021=100]-Revision History
+314,"TR,DF_HUFE_EDO_V1,1.0",Services producer price index and rate of change [2017=100]
+315,"TR,DF_ADNKS_T31,1.1",Sex ratio by age group
+316,"TR,DF_CINSIYETE_GORE_SATISLAR_V3,1.0",Share of Annual Sales by Gender (%)
+317,"TR,DF_UH_BH_PAY_BOLGESEL,1.0",Share of the regions by sectors (%)
+318,"TR,DF_EVLENME_YASGR_ESMEDENI,1.0",Spouses by Age Group and Previous Marital Status of Spouse
+319,"TR,DF_EVLENME_KARSILIKLI_MEDENI,1.0",Spouses by Province and Respective Marital Status Before Marriage
+320,"TR,DF_ISGUCU_AYLIK_TAMAMLAYICI_GOSTERGE_C,1.0",Supplementary Indicators for Labour Force
+321,"TR,DF_ISGUCU_AYLIK_TAMAMLAYICI_GOSTERGE_O,1.0",Supplementary Indicators for Labour Force-Revision History
+322,"TR,DF_BD_HAYATTA_KALMA,1.2",Survival indicators of enterprises
+323,"TR,DF_GENEL_DEVLET_VERGI_SOSYAL_KATKI_1,1.0",Tax and Social Contribution Receipts of General Government
+324,"TR,DF_DIS_TICARET_HADLERI_V1,1.0",Terms of Trade
+325,"TR,DF_ENERJISIZ_DTH,1.0",Terms of Trade Excluding Energy
+326,"TR,DF_ALTINSIZ_DTH,1.0",Terms of Trade Excluding Gold
+327,"TR,DF_ALTINSIZ_ENERJISIZ_DTH,1.0",Terms of Trade Excluding Gold and Energy
+328,"TR,DF_SU_ATIKSU_BELEDIYE_CEKILEN_DAGITILAN_V1,1.0",The Amount of Abstracted Distributed Water and Discharged Wastewater by Municipalities (by Provinces)
+329,"TR,DF_DOGUM_DOGARA_ORTSURE_ANNEYASGR,1.0",The Average Duration Between the Mother's Last Two Births by Age Group of Mother (Year)
+330,"TR,DF_MOTORLU_KARA_TASIT_DEVRI_YAPILAN_V3,1.0",The Number of Road Motor Vehicles Handed Over by Months
+331,"TR,DF_MOTORLU_KARA_TASIT_DEVRI_YAPILAN_IL_V3,1.0",The Number of Road Motor Vehicles Handed Over by Province
+332,"TR,DF_MOTORLU_KARA_TASIT_KAYDI_V1,1.0",The Number of Road Motor Vehicles Registered and Withdrawn by Month and Year
+333,"TR,DF_MOTORLU_KARA_TASIT_ILLER_V3,1.0",The Number of Road Motor Vehicles by Province
+334,"TR,DF_MOTORLU_KARA_TASIT_YIL_V3,1.0",The Number of Road Motor Vehicles by Years
+335,"TR,DF_ADNKS_T33,1.1",The most used female names by the year of birth and order in the first hundred names
+336,"TR,DF_ADNKS_T32,1.1",The most used male names by the year of birth and order in the first hundred names
+337,"TR,DF_BIYOTEKNOLOJI_FAALIYET_ENGEL,1.0",The number of barriers to biotechnological R&D activities
+338,"TR,DF_BIYOTEKNOLOJI_TICARI_ENGEL,1.0",The number of barriers to the commercialization of biotechnology products
+339,"TR,DF_BIYOTEKNOLOJI_IST_URUN_STRATEJI,1.0",The number of biotechnology products and strategies
+340,"TR,DF_INTERNET_ERISIM,1.0",The proportion of enterprises which use computer and have ınternet access by economic activity and size group (%)
+341,"TR,DF_FINANSAL_YATIRIM_ARAC_REEL_GETIRI,1.0",The rates of profits created by means of financial invesment (%)
+342,"TR,DF_ATIK_TERMIK_SANTRALLER_V1,1.0",Thermal Power Plants Waste Statistics
+343,"TR,DF_DOGUM_IL_TDH,1.0",Total Fertility Rate by Provinces (Number of Children)
+344,"TR,DF_DNG_TDH,1.0",Total Fertility Rate by Selected Countries (Number of Children)
+345,"TR,DF_KUMES_HAYVANCILIK_KULUCKAHANE,1.0",Total Installed Capacity of Incubators
+346,"TR,DF_DNG_NUFUS_ORAN,1.0","Total Population, Child, Youth, Elderly Population and Proportion by Selected Countries"
+347,"TR,DF_UFE_SANAYI_V2,1.0",Total Producer Price Index (DPPI + FPPI) and Change Rates [2010=100]
+348,"TR,DF_TICARET_SATIS_HACIM_ENDEKS_C,1.0",Trade Sales Volume Index [2021=100]
+349,"TR,DF_TICARET_SATIS_HACIM_ENDEKS_O,1.0",Trade Sales Volume Index [2021=100]-Revision History
+350,"TR,DF_CIRO_ENDEKS_DEGISIM_C,1.0",Turnover Indices and Percentage Change [2021=100]
+351,"TR,DF_CIRO_ENDEKS_DEGISIM_O,1.0",Turnover Indices and Percentage Change [2021=100]-Revision History
+352,"TR,DF_YAPISAL_MMIGSYH,1.0",Types of Gross Investment Expenditures on Tangible Assets by Years
+353,"TR,DF_MOTORLU_KARA_TASIT_IBBS_YIL_V2,1.0",Vehicle Types and Number of Road Motor Vehicles by SR Level 1
+354,"TR,DF_TASIT_KILOMETRE_TASIT_CINS_V2,1.0",Vehicle-kilometer Statistics by Vehicle Type
+355,"TR,DF_TASIT_KILOMETRE_YIL_V2,1.0",Vehicle-kilometer Statistics by Years
+356,"TR,DF_TASIT_KILOMETRE_YAS_GRUP_V2,1.0",Vehicle-kilometer by Vehicle Type and Age Group
+357,"TR,DF_ATIK_BERTARAF_GERI_KAZANIM_TESIS_V1,1.0",Waste Disposal and Recovery Facilities Statistics
+358,"TR,DF_ATIK_IMALAT_SANAYI_ALT_SEKTORLER_V1,1.0",Waste Statistics of Manufacturing Industry Sub-Sectors
+359,"TR,DF_SU_ATIKSU_ENDUSTRIYEL_SEKTOR_KOY_MIKTAR_V1,1.0",Wastewater Generated by Industrial Sectors and Villages
+360,"TR,DF_SU_ATIKSU_ARITMA_TESIS_V1,1.0",Wastewater Treatment Plant Statistics
+361,"TR,DF_SU_ATIKSU_BELEDIYE_ICMESUYU_SEBEKE_V1,1.0",Water Abstraction for Municipal Water Supply Network
+362,"TR,DF_SU_ATIKSU_IMALAT_SANAYI_ALT_SEKTOR_V1,1.0",Water and Wastewater Statistics of Manufacturing Industry Sub-Sectors
+363,"TR,DF_GENC_NUFUS_OKURYAZARLIK_ORAN,1.0",Youth literacy rate of persons by sex
+364,"TR,DF_SANAYI_URETIM_ENDEKS_ETKI_O,1.0",l Production Index Impact [2021=100]-Revision History
