@@ -60,18 +60,18 @@ uv run tuik-sdmx-mcp serve
 
 ## Ekran Görüntüleri
 
-### Dış Ticaret
+**Dış Ticaret**
 
 <img width="1393" height="752" alt="file-8bc3c9ae8542e3fab3a9fee3afaa5ef4" src="https://github.com/user-attachments/assets/972ed888-1177-48fa-8330-549041ddfe7f" />
 
-### Motorlu Kara Taşıtları
+**Motorlu Kara Taşıtları**
 
 <img width="817" height="674" alt="image" src="https://github.com/user-attachments/assets/df72635b-ecac-452a-93a6-9e15a777939b" />
 
-### Olmayan Veriler
+**Olmayan Veriler**
 
 <img width="1248" height="105" alt="image" src="https://github.com/user-attachments/assets/0077b01b-ef69-4f61-aa96-83d4c9545b4e" />
-_Bazıları için EVDS-MCP kullanabilirsiniz. :)_
+Bazıları için EVDS-MCP kullanabilirsiniz. :)
 
 ## Araçlar (Tools)
 
