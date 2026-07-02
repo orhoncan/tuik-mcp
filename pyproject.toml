@@ -12,8 +12,16 @@ dependencies = [
     "httpx>=0.27.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
 [project.scripts]
 tuik-sdmx-mcp = "tuik_sdmx_mcp.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [tool.hatch.version]
 path = "src/tuik_sdmx_mcp/_version.py"

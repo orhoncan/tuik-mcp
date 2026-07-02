@@ -25,7 +25,9 @@ Anahtarı sunucuya iki yoldan verebilirsiniz:
 
 - **Guided workflow**: Sunucu, LLM'i adım adım akışı yönlendirir: önce arama, sonra kırılım seçimi, sonra filtreli veri çekme. Token kullanımını minimize eder.
 - **Akıllı metadata**: `detail=nodata` ile veri çekmeden boyut yapısını getirir. Tek değerli boyutlar otomatik gizlenir, sadece seçim gerektiren kırılımlar gösterilir.
-- **Client-side filtreleme**: API, seri anahtarı (series key) sırasına göre URL filtresi destekler; bu sunucu ise kullanım kolaylığı için `boyut_filtre` ile boyut adına göre parse sonrası filtreleme yapar (kod sırası bilmeye gerek kalmaz).
+- **Sunucu tarafı filtreleme**: `boyut_filtre`, boyut adı veya kod id'sinden SDMX seri anahtarına çevrilir ve filtre URL'de sunucuya gönderilir - yalnızca istenen kırılım indirilir (kod sırası bilmeye gerek kalmaz). Geçersiz değer verilirse geçerli değerleri listeleyen net bir hata döner.
+- **Satır sınırı ve son N dönem**: `son_gozlem` ile her seride yalnızca en yeni N dönem çekilir (sunucu tarafı); `limit` (varsayılan 5000) döndürülen satır sayısını kırpar ve `truncated` bayrağıyla bildirir. Büyük dataflow'lar LLM context'ini şişirmez.
+- **Türkçe arama**: Dataflow adları İngilizce olsa da sık kullanılan Türkçe terimler (işsizlik, nüfus, enflasyon, ihracat...) otomatik İngilizce karşılıklarıyla eşleştirilir.
 - **Otomatik temizlik**: Tek değerli sütunlar (ör. "Not Applicable") veri çıktısından otomatik kaldırılır.
 
 ## Kurulum
@@ -150,7 +152,9 @@ tuik_cek(
     dataflow_id="DF_YIUFE_EDO",
     baslangic="2026-01",
     bitis="2026-03",
-    boyut_filtre={"FAAL_GRUP": ["Total"], "DEGISIM": ["Index"]}
+    boyut_filtre={"FAAL_GRUP": ["Total"], "DEGISIM": ["Index"]},
+    son_gozlem=0,
+    limit=5000,
 )
 ```
 
@@ -160,9 +164,11 @@ tuik_cek(
 | `dataflow_id` | Dataflow ID'si | `"DF_YIUFE_EDO"` |
 | `baslangic` | Başlangıç dönemi | `"2024-01"`, `"2023"` |
 | `bitis` | Bitiş dönemi | `"2026-03"` |
-| `boyut_filtre` | Boyut filtresi (name bazlı) | `{"FAAL_GRUP": ["Total"]}` |
+| `boyut_filtre` | Boyut filtresi (name veya kod id bazlı, sunucu tarafı) | `{"FAAL_GRUP": ["Total"]}` |
+| `son_gozlem` | Her seride yalnızca en yeni N dönem (0 = kapalı) | `12` |
+| `limit` | Döndürülen satır üst sınırı (0 = sınırsız) | `5000` |
 
-**Dönen:** `{"row_count": 3, "rows": [{...}, ...]}` formatında düz dict listesi.
+**Dönen:** `{"row_count": 3, "total_row_count": 3, "truncated": false, "rows": [{...}, ...]}` formatında düz dict listesi. `truncated=true` ise sonuç `limit`'e göre kırpılmıştır.
 
 ## Kullanım Akışı
 

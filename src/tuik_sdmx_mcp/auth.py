@@ -202,6 +202,14 @@ def has_api_key() -> bool:
     return bool(_manager.api_key)
 
 
+def reset_token() -> None:
+    """Cache'lenen access token'ı temizler; sonraki istek yeniden token alır.
+
+    Token beklenenden erken geçersizleşip 401/403 alındığında çağrılır.
+    """
+    _manager.reset()
+
+
 async def validate_and_save_key(
     client: httpx.AsyncClient, api_key: str
 ) -> Path:
