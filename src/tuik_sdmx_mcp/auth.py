@@ -19,7 +19,7 @@ from pathlib import Path
 
 import httpx
 
-TOKEN_URL = "https://giris.tuik.gov.tr/realms/web/protocol/openid-connect/token"
+TOKEN_URL = "https://giris.tuik.gov.tr/realms/web/protocol/openid-connect/token"  # nosec B105 - parola değil, herkese açık uç nokta
 CLIENT_ID = "nsi-ws-consumer"
 API_KEY_ENV = "TUIK_API_KEY"
 
@@ -99,7 +99,7 @@ class TokenManager:
 
     def __init__(self, api_key: str | None = None) -> None:
         self._explicit_key = api_key
-        self._token: str = ""
+        self._token: str = ""  # nosec B105 - boş başlangıç değeri, parola değil
         self._expires_at: float = 0.0
         self._lock = asyncio.Lock()
 
@@ -180,7 +180,7 @@ class TokenManager:
 
     def reset(self) -> None:
         """Cache'lenen token'ı temizler (testler ve manuel yenileme için)."""
-        self._token = ""
+        self._token = ""  # nosec B105 - cache temizleme, parola değil
         self._expires_at = 0.0
 
 

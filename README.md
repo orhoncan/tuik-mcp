@@ -82,7 +82,7 @@ Bazıları için EVDS-MCP kullanabilirsiniz. :)
 `TUIK_API_KEY` tanımlı değilse, API anahtarını doğrulayıp kalıcı olarak kaydeder. Diğer araçlar "API anahtarı tanımlı değil" hatası verdiğinde kullanılır.
 
 ```
-tuik_anahtar_ayarla(api_key="019f1ebd-...")
+tuik_anahtar_ayarla(api_key="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
 ```
 
 **Dönen:** `{"ok": true, "config": "...config.json", "dataflow_count": 362, ...}`
@@ -115,10 +115,12 @@ tuik_meta(dataflow_id="DF_YIUFE_EDO")
 ```
 
 **Dönen:**
+
 - `filterable_dimensions`: Birden fazla değeri olan boyutlar (seçim gerektiren)
 - `fixed_dimensions`: Tek değerli sabit boyutlar (bilgi amaçlı)
 
 Örnek çıktı:
+
 ```json
 {
   "filterable_dimensions": [
@@ -165,8 +167,9 @@ tuik_cek(
 ```
 
 **Parametreler:**
+
 | Parametre | Açıklama | Örnek |
-|-----------|----------|-------|
+| ----------- | ---------- | ------- |
 | `dataflow_id` | Dataflow ID'si | `"DF_YIUFE_EDO"` |
 | `baslangic` | Başlangıç dönemi | `"2024-01"`, `"2023"` |
 | `bitis` | Bitiş dönemi | `"2026-03"` |

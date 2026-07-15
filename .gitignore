@@ -10,3 +10,6 @@ __pycache__/
 dist/
 build/
 uv.lock
+
+# Testler yayınlanmaz (lokal gelistirme + pre-push hook kullanir)
+tests/

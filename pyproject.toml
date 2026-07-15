@@ -22,6 +22,7 @@ tuik-sdmx-mcp = "tuik_sdmx_mcp.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
 
 [tool.hatch.version]
 path = "src/tuik_sdmx_mcp/_version.py"

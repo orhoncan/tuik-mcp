@@ -409,6 +409,12 @@ def filtre_to_names(
         if dim is None:
             resolved[dim_id] = list(wanted)
             continue
+        # parse_sdmx_data sabit seri boyutlarını çıktıda düşürür. Tek değerli
+        # bir boyut build_sdmx_key tarafından zaten doğrulandığı ve veriyi daha
+        # fazla daraltamayacağı için client filtresine eklenmemelidir; aksi halde
+        # eksik sütun fail-closed kontrolünde geçerli sonuçların tamamı elenir.
+        if dim.get("single_value"):
+            continue
         names = {v["name"] for v in dim["values"]}
         by_id = {v["id"]: v["name"] for v in dim["values"]}
         resolved[dim_id] = [
@@ -434,7 +440,9 @@ def filter_rows(
     for row in rows:
         match = True
         for dim_id, allowed in boyut_filtre.items():
-            if dim_id in row and row[dim_id] not in allowed:
+            # Eksik boyutu eşleşme sayma: API beklenmedik bir yapı döndürürse
+            # filtrelenmemiş/alakasız satırlar filtreyi geçmiş gibi görünmesin.
+            if dim_id not in row or row[dim_id] not in allowed:
                 match = False
                 break
         if not match:

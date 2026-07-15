@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+if [ -x .venv/bin/python ]; then
+    python=.venv/bin/python
+else
+    python=python3
+fi
+
+echo "pre-push: running pytest"
+PYTHONPATH="$repo_root/src${PYTHONPATH:+:$PYTHONPATH}" "$python" -m pytest -q
