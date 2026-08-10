@@ -2,7 +2,7 @@
 
 [TÜİK](https://www.tuik.gov.tr/) (Türkiye İstatistik Kurumu) SDMX REST API'sine erişim sağlayan bir [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) sunucusu.
 
-362 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
+387 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
 doğrudan LLM üzerinden erişim sağlar.
 
 Mevcut tüm dataflow'ların (SDMX üçlüsü + İngilizce başlık) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
@@ -85,7 +85,7 @@ Bazıları için EVDS-MCP kullanabilirsiniz. :)
 tuik_anahtar_ayarla(api_key="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
 ```
 
-**Dönen:** `{"ok": true, "config": "...config.json", "dataflow_count": 362, ...}`
+**Dönen:** `{"ok": true, "config": "...config.json", "dataflow_count": 387, ...}`
 
 ### `tuik_ara` - Dataflow arama
 
@@ -99,7 +99,7 @@ tuik_ara(query="producer price index")
 
 ### `tuik_listele` - Tüm dataflow'ları listeleme
 
-Mevcut 362 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`no, uclu, baslik` kolonları).
+Mevcut 387 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`no, uclu, baslik` kolonları).
 
 ```
 tuik_listele()
