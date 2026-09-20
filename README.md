@@ -9,6 +9,8 @@ Mevcut tüm dataflow'ların (SDMX serisi + Türkçe açıklama + İngilizce ad) 
 
 **Bu aracı kendi araştırmalarımı daha hızlı yapabilmek için oluşturdum, Türkiye İstatistik Kurumu ile bir bağlantısı yoktur. Çıktıları bültenlerden de kontrol ediniz.**
 
+_Eğer teknik tarafla uğraşmak istemiyorsanız kolay kurulumdaki adım yeterli olacaktır. Ardından normal bir istem şeklinde veri çekmesini sağlayabilirsiniz._
+
 ## Kimlik doğrulama (API Anahtarı gerekli)
 
 TÜİK, SDMX servislerine erişimi TÜİK giriş sistemi üzerinden alınan kısa ömürlü (varsayılan 300 sn) Bearer token ile korur.
@@ -16,12 +18,12 @@ Sunucu bu token'ı sizin adınıza otomatik alır ve süresi dolmadan yeniler; s
 
 1. [Veri Portalı](https://veriportali.tuik.gov.tr/tr)'na kullanıcı adı/şifre ile girin.
 2. **Kullanıcı Bilgileri** ekranından SMS ile telefon doğrulamasını tamamlayın; üretilen **API Anahtarı**'nı kopyalayın.
-   (Türkiye telefon hattınız yoksa `info@tuik.gov.tr` üzerinden talep edebilirsiniz - bkz. [SDMX web servis dokümantasyonu](https://veriportali.tuik.gov.tr/tr/sdmx-web-service-documentation).)
+   (Türkiye telefon hattınız yoksa `info@tuik.gov.tr` üzerinden talep edebilirsiniz. bkz. [SDMX web servis dokümantasyonu](https://veriportali.tuik.gov.tr/tr/sdmx-web-service-documentation).)
 
 Anahtarı sunucuya iki yoldan verebilirsiniz:
 
 - **Ortam değişkeni (önerilen):** `TUIK_API_KEY` olarak tanımlayın (aşağıdaki MCP yapılandırmasına bakın).
-- **Kurduktan sonra sorulur:** Ortam değişkeni yoksa sunucu yine de açılır. İlk veri isteğinde araçlar "API anahtarı tanımlı değil" der; asistan anahtarınızı sorar ve `tuik_anahtar_ayarla` aracıyla kaydeder. Anahtar doğrulanıp `~/.config/tuik-sdmx-mcp/config.json` dosyasına (0600 izinle) yazılır ve kalıcı olur - bir daha sorulmaz.
+- **Kurduktan sonra sorulur:** Ortam değişkeni yoksa sunucu yine de açılır. İlk veri isteğinde araçlar "API anahtarı tanımlı değil" der; asistan anahtarınızı sorar ve `tuik_anahtar_ayarla` aracıyla kaydeder. Anahtar doğrulanıp `~/.config/tuik-sdmx-mcp/config.json` dosyasına (0600 izinle) yazılır ve kalıcı olur, bir daha sorulmaz.
 
 `TUIK_API_KEY` tanımlıyken `tuik_anahtar_ayarla` ile farklı bir anahtar kaydedilemez. Anahtarı değiştirmek için ortam değişkenini güncelleyin veya kaldırıp sunucuyu yeniden başlatın.
 
@@ -29,7 +31,7 @@ Anahtarı sunucuya iki yoldan verebilirsiniz:
 
 - **Guided workflow**: Sunucu, LLM'i adım adım akışı yönlendirir: önce arama, sonra kırılım seçimi, sonra filtreli veri çekme. Token kullanımını minimize eder.
 - **Akıllı metadata**: `detail=nodata` ile veri çekmeden boyut yapısını getirir. Tek değerli boyutlar otomatik gizlenir, sadece seçim gerektiren kırılımlar gösterilir.
-- **Sunucu tarafı filtreleme**: `boyut_filtre`, boyut adı veya kod id'sinden SDMX seri anahtarına çevrilir ve filtre URL'de sunucuya gönderilir - yalnızca istenen kırılım indirilir (kod sırası bilmeye gerek kalmaz). Geçersiz değer verilirse geçerli değerleri listeleyen net bir hata döner.
+- **Sunucu tarafı filtreleme**: `boyut_filtre`, boyut adı veya kod id'sinden SDMX seri anahtarına çevrilir ve filtre URL'de sunucuya gönderilir ve yalnızca istenen kırılım indirilir (kod sırası bilmeye gerek kalmaz). Geçersiz değer verilirse geçerli değerleri listeleyen net bir hata döner.
 - **Satır sınırı ve son N dönem**: `son_gozlem` ile her seride yalnızca en yeni N dönem çekilir (sunucu tarafı); `limit` (varsayılan 5000) döndürülen satır sayısını kırpar ve `truncated` bayrağıyla bildirir. Büyük dataflow'lar LLM context'ini şişirmez.
 - **Türkçe arama**: Dataflow adları İngilizce olsa da sık kullanılan Türkçe terimler (işsizlik, nüfus, enflasyon, ihracat...) otomatik İngilizce karşılıklarıyla eşleştirilir.
 - **Otomatik temizlik**: Tek değerli sütunlar (ör. "Not Applicable") veri çıktısından otomatik kaldırılır.
@@ -38,7 +40,7 @@ Anahtarı sunucuya iki yoldan verebilirsiniz:
 
 ## Kolay Kurulum
 
-Hangi hizmeti kullanıyorsanız (Codex, Claude Code, Antigravity vs.) doğrudan sayfasnın adresini verip (https://github.com/orhoncan/tuik-mcp) kurmasını isterseniz kendisi halledecektir.
+Hangi hizmeti kullanıyorsanız (Codex, Claude Code, Antigravity vs.) doğrudan sayfanın adresini verip (https://github.com/orhoncan/tuik-mcp) kurmasını isterseniz kendisi halledecektir.
 
 ### Claude Code / Claude Desktop
 
@@ -82,7 +84,6 @@ uv run tuik-sdmx-mcp serve
 
 <img width="1248" height="105" alt="image" src="https://github.com/user-attachments/assets/0077b01b-ef69-4f61-aa96-83d4c9545b4e" />
 Bazıları için EVDS-MCP kullanabilirsiniz. :) (TÜFE SDMX'e eklendi ama bazı seriler hâlâ sadece EVDS'de)
-
 
 ## Doğrudan İstem
 
@@ -212,19 +213,6 @@ Sunucu, LLM'i şu adımları izlemeye yönlendirir:
 ```
 
 Bu akış sayesinde 25.000+ satırlık ham veri yerine sadece 3 satır döner.
-
-## Geliştirme
-
-```bash
-# Testleri çalıştır
-uv run python -m pytest tests/ -v
-
-# Sunucuyu başlat
-uv run tuik-sdmx-mcp serve
-
-# Sürüm bilgisi
-uv run tuik-sdmx-mcp version
-```
 
 ## Lisans
 
