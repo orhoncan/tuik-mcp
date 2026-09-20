@@ -73,7 +73,7 @@ uv run tuik-sdmx-mcp serve
 **Olmayan Veriler**
 
 <img width="1248" height="105" alt="image" src="https://github.com/user-attachments/assets/0077b01b-ef69-4f61-aa96-83d4c9545b4e" />
-Bazıları için EVDS-MCP kullanabilirsiniz. :)
+Bazıları için EVDS-MCP kullanabilirsiniz. :) (TÜFE SDMX'e eklendi ama bazı seriler hâlâ sadece EVDS'de)
 
 ## Araçlar (Tools)
 
