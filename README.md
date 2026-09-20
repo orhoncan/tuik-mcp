@@ -5,7 +5,7 @@
 431 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
 doğrudan LLM üzerinden erişim sağlar.
 
-Mevcut tüm dataflow'ların (SDMX üçlüsü + İngilizce başlık) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
+Mevcut tüm dataflow'ların (SDMX üçlüsü + İngilizce başlık + Türkçe açıklama) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
 
 ## Kimlik doğrulama (API Anahtarı gerekli)
 
@@ -99,7 +99,7 @@ tuik_ara(query="producer price index")
 
 ### `tuik_listele` - Tüm dataflow'ları listeleme
 
-Mevcut 431 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`no, uclu, baslik` kolonları).
+Mevcut 431 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`no, uclu, baslik, turkce_aciklama` kolonları).
 
 ```
 tuik_listele()
