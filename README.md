@@ -36,7 +36,7 @@ Anahtarı sunucuya iki yoldan verebilirsiniz:
 
 ## Kurulum
 
-## Kolay Kurulum
+## Kolay Kurulum
 
 Hangi hizmeti kullanıyorsanız (Codex, Claude Code, Antigravity vs.) doğrudan sayfasnın adresini verip (https://github.com/orhoncan/tuik-mcp) kurmasını isterseniz kendisi halledecektir.
 
