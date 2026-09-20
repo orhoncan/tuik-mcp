@@ -7,6 +7,8 @@ doğrudan LLM üzerinden erişim sağlar.
 
 Mevcut tüm dataflow'ların (SDMX serisi + Türkçe açıklama + İngilizce ad) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
 
+**Bu aracı kendi araştırmalarımı daha hızlı yapabilmek için oluşturdum, Türkiye İstatistik Kurumu ile bir bağlantısı yoktur. Çıktıları bültenlerden de kontrol ediniz.**
+
 ## Kimlik doğrulama (API Anahtarı gerekli)
 
 TÜİK, SDMX servislerine erişimi TÜİK giriş sistemi üzerinden alınan kısa ömürlü (varsayılan 300 sn) Bearer token ile korur.
@@ -33,6 +35,10 @@ Anahtarı sunucuya iki yoldan verebilirsiniz:
 - **Otomatik temizlik**: Tek değerli sütunlar (ör. "Not Applicable") veri çıktısından otomatik kaldırılır.
 
 ## Kurulum
+
+## Kolay Kurulum
+
+Hangi hizmeti kullanıyorsanız (Codex, Claude Code, Antigravity vs.) doğrudan sayfasnın adresini verip (https://github.com/orhoncan/tuik-mcp) kurmasını isterseniz kendisi halledecektir.
 
 ### Claude Code / Claude Desktop
 
@@ -76,6 +82,14 @@ uv run tuik-sdmx-mcp serve
 
 <img width="1248" height="105" alt="image" src="https://github.com/user-attachments/assets/0077b01b-ef69-4f61-aa96-83d4c9545b4e" />
 Bazıları için EVDS-MCP kullanabilirsiniz. :) (TÜFE SDMX'e eklendi ama bazı seriler hâlâ sadece EVDS'de)
+
+
+## Doğrudan İstem
+
+Araçlar arka planda çalışıyor olsa da doğrudan isteğinizi yazarak çıktı alabilirsiniz.
+- Son enflasyon rakamlarını çek.
+- Dış ticaretin son 3 aydaki yüzdelik değişimlerini hesapla.
+- Atıl işsizlik oranı son 1 yılda nasıl değişmiş? vb.
 
 ## Araçlar (Tools)
 
