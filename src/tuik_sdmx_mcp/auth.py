@@ -108,11 +108,9 @@ class TokenManager:
         # Öncelik sırası: açık verilen anahtar > ortam değişkeni > kayıtlı
         # config dosyası. Her erişimde okunur ki anahtar döndürüldüğünde ya da
         # kullanıcı sonradan ayarladığında yeniden başlatmaya gerek kalmasın.
-        return (
-            self._explicit_key
-            or os.environ.get(API_KEY_ENV, "")
-            or load_saved_key()
-        )
+        explicit = (self._explicit_key or "").strip()
+        environment = os.environ.get(API_KEY_ENV, "").strip()
+        return explicit or environment or load_saved_key()
 
     def _valid(self) -> bool:
         return bool(self._token) and time.monotonic() < self._expires_at
@@ -222,6 +220,13 @@ async def validate_and_save_key(
     api_key = (api_key or "").strip()
     if not api_key:
         raise ValueError("API anahtarı boş olamaz.")
+    environment_key = os.environ.get(API_KEY_ENV, "").strip()
+    if environment_key and environment_key != api_key:
+        raise ValueError(
+            f"{API_KEY_ENV} ortam değişkeninde farklı bir anahtar tanımlı. "
+            "Yeni anahtarı kullanmak için ortam değişkenini güncelleyin veya "
+            "kaldırıp sunucuyu yeniden başlatın."
+        )
     # Doğrula: geçici bir yönetici ile token almayı dene.
     probe = TokenManager(api_key=api_key)
     await probe._refresh(client)  # hata -> TokenServiceError

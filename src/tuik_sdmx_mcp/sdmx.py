@@ -8,6 +8,8 @@ structure) biçiminde döner - parse fonksiyonları bu yapıya göre çalışır
 
 from __future__ import annotations
 
+import unicodedata
+
 import httpx
 
 from tuik_sdmx_mcp.auth import auth_headers, reset_token
@@ -67,8 +69,15 @@ def parse_dataflows(
     return results
 
 
-def parse_sdmx_data(json_data: dict) -> list[dict]:
+def parse_sdmx_data(
+    json_data: dict,
+    keep_dimensions: set[str] | None = None,
+) -> list[dict]:
     """Parse SDMX JSON response into a list of flat dicts.
+
+    ``keep_dimensions`` prevents selected series dimensions from being removed
+    as constants. The long-URL client-side fallback needs those columns for
+    filtering even when the selected response contains only one value.
 
     Automatically removes columns where all rows share a single value
     (e.g. "Not Applicable", or a lone indicator name).
@@ -122,10 +131,11 @@ def parse_sdmx_data(json_data: dict) -> list[dict]:
     if rows:
         # Sabit sütunları temizle - ama observation boyutlarını (ör. TIME_PERIOD)
         # asla düşürme: tek dönemlik çekimde tarih kaybolmasın.
+        kept_ids = keep_dimensions or set()
         all_keys = [k for k in rows[0] if k != "DEGER"]
         drop_keys = []
         for k in all_keys:
-            if k in obs_ids:
+            if k in obs_ids or k in kept_ids:
                 continue
             unique = set(r.get(k) for r in rows)
             if len(unique) <= 1:
@@ -162,13 +172,21 @@ _TR_EN_SYNONYMS: dict[str, tuple[str, ...]] = {
 }
 
 
-def _tr_lower(text: str) -> str:
-    """Türkçe'ye duyarlı küçük harf dönüşümü.
+def _search_normalize(text: str) -> str:
+    """Türkçe ve İngilizce metni ortak, aksansız arama biçimine çevirir.
 
-    str.lower() 'İ'yi 'i' + U+0307 (birleşik nokta) yapar; bu da 'işsizlik'
-    gibi sözlük anahtarlarıyla eşleşmez. Önce İ->i ve I->ı çevirisi yapılır.
+    Katalog İngilizce olduğu için ``I`` harfini Türkçe kuralla ``ı`` yapmak
+    ``Import`` gibi sözcükleri bozuyordu. Unicode ayrıştırma ve casefold ile
+    hem ``Import/import`` hem de ``İşsizlik/işsizlik`` aynı biçime gelir.
     """
-    return text.replace("İ", "i").replace("I", "ı").lower()
+    decomposed = unicodedata.normalize("NFKD", text).casefold().replace("ı", "i")
+    return "".join(char for char in decomposed if not unicodedata.combining(char))
+
+
+_NORMALIZED_SYNONYMS: dict[str, tuple[str, ...]] = {
+    _search_normalize(term): tuple(_search_normalize(value) for value in values)
+    for term, values in _TR_EN_SYNONYMS.items()
+}
 
 
 def search_dataflows(
@@ -182,17 +200,17 @@ def search_dataflows(
     terimler (ör. 'oranı' gibi ek/dolgu kelimeler) sorguyu boşa düşürmesin
     diye yok sayılır; tüm terimler eşleşmesizse boş liste döner.
     """
-    terms = _tr_lower(query).split()
+    terms = _search_normalize(query).split()
     if not terms:
         return []
 
     texts = [
-        (df, _tr_lower(f"{df['name']} {df['description']} {df['id']}"))
+        (df, _search_normalize(f"{df['name']} {df['description']} {df['id']}"))
         for df in dataflows
     ]
 
     def variants(term: str) -> tuple[str, ...]:
-        return (term, *_TR_EN_SYNONYMS.get(term, ()))
+        return (term, *_NORMALIZED_SYNONYMS.get(term, ()))
 
     # Katalogda hiçbir yerde geçmeyen terimleri AND'den düşür.
     effective = [
@@ -534,10 +552,18 @@ def limit_rows(
 
 
 def resolve_version(
-    dataflows: list[dict], dataflow_id: str
+    dataflows: list[dict],
+    dataflow_id: str,
+    requested_version: str = "",
 ) -> str:
-    """Find the latest version for a dataflow ID (numeric, not lexical)."""
+    """Validate a dataflow ID and honor a version or select the latest one.
+
+    TÜİK kataloğu eski ama hâlâ erişilebilir sürümlerin tamamını listelemek
+    zorunda değildir. Açık sürümün varlığı veri yapısı isteğiyle doğrulanır.
+    """
     versions = [df["version"] for df in dataflows if df["id"] == dataflow_id]
     if not versions:
         raise ValueError(f"Dataflow bulunamadı: {dataflow_id}")
+    if requested_version:
+        return requested_version
     return max(versions, key=_version_key)

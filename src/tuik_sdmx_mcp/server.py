@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import sys
+import time
 from contextlib import asynccontextmanager
 
 import httpx
@@ -39,6 +41,10 @@ _DEFAULT_ROW_LIMIT = 5000
 # client tarafında süzmeye düşülür.
 _MAX_KEY_LEN = 1500
 
+# Başlangıçtan sonraki katalog yenileme denemeleri başarısız olursa art arda
+# tool çağrılarının TÜİK servisini sıkıştırmasını önleyen kısa bekleme süresi.
+_CATALOG_RETRY_DELAY = 5.0
+
 _state: dict = {}
 
 # Anahtar hiç tanımlı değilken araçların döndürdüğü yönlendirme. LLM'in
@@ -70,6 +76,7 @@ async def _load_dataflow_cache(client: httpx.AsyncClient) -> None:
     # Katalog yenilendi; eski boyut yapıları bayatlamış olabilir.
     _state["structures"] = {}
     _state["startup_error"] = None
+    _state["catalog_retry_after"] = 0.0
     sys.stderr.write(
         f"TÜİK SDMX MCP: {len(_state['dataflows'])} production dataflow cached\n"
     )
@@ -83,6 +90,8 @@ async def server_lifespan(server: FastMCP):
     _state["dataflows_all"] = []
     _state["structures"] = {}
     _state["startup_error"] = None
+    _state["catalog_lock"] = asyncio.Lock()
+    _state["catalog_retry_after"] = 0.0
     # Sunucu ömrü boyunca tek bir client: bağlantı havuzu paylaşılır, her tool
     # çağrısında yeni bağlantı açma maliyeti ortadan kalkar. transport retries
     # geçici bağlantı hatalarında (ConnectError/timeout) birkaç kez yeniden dener.
@@ -140,14 +149,50 @@ async def _get_dimensions(dataflow_id: str, version: str) -> list[dict]:
     return cache[ck]
 
 
-def _require_ready() -> None:
-    """Başlangıçta dataflow cache dolamadıysa net bir hata yükselt.
+async def _ensure_ready() -> None:
+    """Katalog hazır değilse ilk tool çağrısında güvenli biçimde yeniden yükle.
 
-    Böylece anahtar eksik/geçersiz ya da servis erişilemezken araçlar sessizce
-    boş sonuç döndürmek yerine sebebi (ve anahtar ekleme yolunu) açıkça bildirir.
+    Başlangıçtaki geçici bağlantı hatası process'i kalıcı olarak kullanılmaz
+    bırakmamalıdır. Eşzamanlı çağrıları tek istekte birleştirir ve başarısız
+    on-demand denemeler arasında kısa bir bekleme uygular.
     """
-    if _state.get("startup_error") and not _state.get("dataflows_all"):
-        raise RuntimeError(_state["startup_error"])
+    if _state.get("dataflows_all"):
+        return
+    if not has_api_key():
+        raise RuntimeError(_state.get("startup_error") or _NO_KEY_HINT)
+
+    lock = _state.setdefault("catalog_lock", asyncio.Lock())
+    async with lock:
+        if _state.get("dataflows_all"):
+            return
+        now = time.monotonic()
+        retry_after = _state.get("catalog_retry_after", 0.0)
+        if now < retry_after:
+            raise RuntimeError(
+                _state.get("startup_error")
+                or "Dataflow listesi henüz yüklenemedi. Birazdan tekrar deneyin."
+            )
+
+        client = _state.get("client")
+        if client is None:
+            raise RuntimeError("TÜİK SDMX istemcisi başlatılmadı.")
+        try:
+            await _load_dataflow_cache(client)
+        except MissingAPIKeyError as exc:
+            message = f"{exc}\n\n{_NO_KEY_HINT}"
+        except TokenServiceError as exc:
+            message = str(exc)
+        except Exception as exc:
+            message = (
+                f"Dataflow listesi alınamadı: {exc}. API anahtarı doğru mu "
+                "ve TÜİK SDMX servisi erişilebilir mi kontrol edin."
+            )
+        else:
+            return
+
+        _state["startup_error"] = message
+        _state["catalog_retry_after"] = time.monotonic() + _CATALOG_RETRY_DELAY
+        raise RuntimeError(message)
 
 
 mcp = FastMCP(
@@ -199,7 +244,9 @@ async def tuik_anahtar_ayarla(api_key: str) -> dict:
     """
     client: httpx.AsyncClient = _state["client"]
     path = await validate_and_save_key(client, api_key)
-    await _load_dataflow_cache(client)
+    lock = _state.setdefault("catalog_lock", asyncio.Lock())
+    async with lock:
+        await _load_dataflow_cache(client)
     return {
         "ok": True,
         "config": str(path),
@@ -224,7 +271,7 @@ async def tuik_listele(
     Args:
         include_test: If True, include non-production (test) dataflows too.
     """
-    _require_ready()
+    await _ensure_ready()
     key = "dataflows_all" if include_test else "dataflows"
     return _state.get(key, [])
 
@@ -248,7 +295,7 @@ async def tuik_ara(
         query: Search terms (space-separated, all must match). Example: "labour force"
         include_test: If True, also search non-production dataflows.
     """
-    _require_ready()
+    await _ensure_ready()
     key = "dataflows_all" if include_test else "dataflows"
     dataflows = _state.get(key, [])
     return search_dataflows(dataflows, query)
@@ -274,9 +321,10 @@ async def tuik_meta(
         dataflow_id: Dataflow ID (e.g. "DF_ISGUCU_AYLIK_TEMEL_ISGUCU_V1")
         version: Version string (e.g. "1.0"). Leave empty for latest.
     """
-    _require_ready()
-    if not version:
-        version = resolve_version(_state.get("dataflows_all", []), dataflow_id)
+    await _ensure_ready()
+    version = resolve_version(
+        _state.get("dataflows_all", []), dataflow_id, version
+    )
 
     dimensions = await _get_dimensions(dataflow_id, version)
 
@@ -339,10 +387,19 @@ async def tuik_cek(
     Returns:
         dict with "rows", "row_count", "total_row_count" and "truncated".
     """
-    _require_ready()
+    await _ensure_ready()
     validate_fetch_params(son_gozlem, limit, baslangic, bitis)
-    if not version:
-        version = resolve_version(_state.get("dataflows_all", []), dataflow_id)
+    explicit_version = bool(version)
+    version = resolve_version(
+        _state.get("dataflows_all", []), dataflow_id, version
+    )
+
+    # Katalog tarihsel sürümlerin tamamını listelemeyebilir. Kullanıcının açıkça
+    # verdiği sürümü mevcut nodata/structure yoluyla doğrula; böylece yanlış
+    # ID/sürüm 404'ü aşağıda "boş veri dilimi" olarak sunulmaz.
+    dimensions: list[dict] | None = None
+    if explicit_version:
+        dimensions = await _get_dimensions(dataflow_id, version)
 
     # Boyut filtresini SDMX anahtarına çevir (sunucu tarafı filtreleme). Değer
     # adları/id'leri yanlışsa build_sdmx_key net bir ValueError yükseltir.
@@ -351,7 +408,8 @@ async def tuik_cek(
     key = ""
     client_filtre: dict[str, list[str]] | None = None
     if boyut_filtre:
-        dimensions = await _get_dimensions(dataflow_id, version)
+        if dimensions is None:
+            dimensions = await _get_dimensions(dataflow_id, version)
         key = build_sdmx_key(dimensions, boyut_filtre)
         if len(key) > _MAX_KEY_LEN:
             client_filtre = filtre_to_names(dimensions, boyut_filtre)
@@ -384,9 +442,12 @@ async def tuik_cek(
             }
         raise
 
-    rows = parse_sdmx_data(raw)
-    # Sunucu tarafı anahtar kullanıldıysa yeniden süzmeye gerek yok; yalnızca
-    # uzun-anahtar fallback'inde ada çözülmüş filtre client tarafında uygulanır.
+    # Uzun-anahtar fallback filtresinin kullandığı boyutlar, dar veri diliminde
+    # sabit görünseler bile parse aşamasında korunmalıdır.
+    rows = parse_sdmx_data(
+        raw,
+        keep_dimensions=set(client_filtre or {}),
+    )
     if client_filtre:
         rows = filter_rows(rows, client_filtre)
     rows, truncated, total = limit_rows(rows, limit)

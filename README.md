@@ -5,7 +5,7 @@
 431 dataflow üzerinden Türkiye'nin resmi istatistiklerine (nüfus, işgücü, enflasyon, dış ticaret, sanayi üretimi vb.)
 doğrudan LLM üzerinden erişim sağlar.
 
-Mevcut tüm dataflow'ların (SDMX üçlüsü + İngilizce başlık + Türkçe açıklama) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
+Mevcut tüm dataflow'ların (SDMX serisi + Türkçe açıklama + İngilizce ad) güncel dökümü için: [`data/dataflows.csv`](data/dataflows.csv).
 
 ## Kimlik doğrulama (API Anahtarı gerekli)
 
@@ -20,6 +20,8 @@ Anahtarı sunucuya iki yoldan verebilirsiniz:
 
 - **Ortam değişkeni (önerilen):** `TUIK_API_KEY` olarak tanımlayın (aşağıdaki MCP yapılandırmasına bakın).
 - **Kurduktan sonra sorulur:** Ortam değişkeni yoksa sunucu yine de açılır. İlk veri isteğinde araçlar "API anahtarı tanımlı değil" der; asistan anahtarınızı sorar ve `tuik_anahtar_ayarla` aracıyla kaydeder. Anahtar doğrulanıp `~/.config/tuik-sdmx-mcp/config.json` dosyasına (0600 izinle) yazılır ve kalıcı olur - bir daha sorulmaz.
+
+`TUIK_API_KEY` tanımlıyken `tuik_anahtar_ayarla` ile farklı bir anahtar kaydedilemez. Anahtarı değiştirmek için ortam değişkenini güncelleyin veya kaldırıp sunucuyu yeniden başlatın.
 
 ## Özellikler
 
@@ -99,7 +101,7 @@ tuik_ara(query="producer price index")
 
 ### `tuik_listele` - Tüm dataflow'ları listeleme
 
-Mevcut 431 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`no, uclu, baslik, turkce_aciklama` kolonları).
+Mevcut 431 production dataflow'u listeler. Statik döküm için [`data/dataflows.csv`](data/dataflows.csv) dosyasına da bakabilirsiniz (`seri, tr_aciklama, ingilizce_adi` kolonları).
 
 ```
 tuik_listele()
